@@ -1,10 +1,16 @@
 
+
+
 import 'package:flutter/material.dart';
-import 'user_info.dart';
-import 'cart.dart';
-import 'search.dart';
-import 'sell.dart';
-import 'home.dart';
+
+
+import 'package:icon/icon.dart';
+
+import 'package:sneakerstore/screens/cart.dart';
+import 'package:sneakerstore/screens/search.dart';
+import 'package:sneakerstore/screens/sell.dart';
+import 'package:sneakerstore/screens/home.dart';
+import 'package:sneakerstore/screens/user_info.dart';
 
 class BottomBarScreen extends StatefulWidget {
   @override
