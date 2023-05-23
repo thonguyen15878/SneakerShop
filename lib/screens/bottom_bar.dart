@@ -83,7 +83,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.rss_feed),
-                  label: 'Sell',
+                  label: 'Market',
                 ),
                 BottomNavigationBarItem(
                   activeIcon: null,

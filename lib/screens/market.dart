@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sneakerstore/screens/cart_empty.dart';
 
-class Cart extends StatelessWidget{
+class Market extends StatelessWidget{
   @override
   Widget build (BuildContext context){
     return Scaffold(
-      body: CartEmpty(),
+      body: Center(
+          child: Text('Market')
+      ),
     );
   }
 }

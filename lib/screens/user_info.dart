@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sneakerstore/consts/colors.dart';
 
 import 'package:list_tile_switch/list_tile_switch.dart';
+import 'package:sneakerstore/providers/dark_theme_provider.dart';
 
 class UserInfo extends StatefulWidget {
   @override
@@ -9,7 +11,7 @@ class UserInfo extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInfo> {
-  bool _value = false;
+
   late ScrollController _scrollController;
   var top = 0.0;
   @override
@@ -22,6 +24,7 @@ void initState(){
   }
   @override
   Widget build (BuildContext context){
+    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -125,20 +128,20 @@ void initState(){
                     userListTile('Phone Number', '9999' , 0, context),
                     userListTile('Shipping address', '' , 0, context),
                     userListTile('joined date', 'date' , 0, context),
-Padding(
-  padding: const EdgeInsets.only(left: 8.0),
-  child: userTitle('user settings'),
-),
-      Divider(
-        thickness: 1,
-        color: Colors.grey,
-      ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: userTitle('user settings'),
+                    ),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
                     ListTileSwitch(
-                      value: _value,
+                      value: themeChange.darkTheme,
                       leading: Icon(Icons.home),
                       onChanged: (value) {
                         setState(() {
-                          _value = value;
+                          themeChange.darkTheme = value;
                         });
                       },
                       visualDensity: VisualDensity.comfortable,
