@@ -4,6 +4,8 @@ import 'package:sneakerstore/consts/theme_data.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
 
+import 'loader.dart';
+
 
 void main() => runApp(MyApp());
 

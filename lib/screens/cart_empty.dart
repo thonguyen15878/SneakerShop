@@ -10,15 +10,16 @@ class CartEmpty extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-          margin: EdgeInsets.only(top: 80),
+          margin: const EdgeInsets.only(top: 80),
           width: double.infinity,
           height: MediaQuery.of(context).size.height * 0.4,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             image: DecorationImage(
               fit: BoxFit.fill,
-              // image: AssetImage('assets/images/emptycart.png'),
-                image: NetworkImage(
-                    'https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png')
+              image: AssetImage('assets/emptycart.png'),
+              //   image: NetworkImage(
+              //       'https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png'
+              //   )
             ),
           ),
         ),
@@ -30,7 +31,7 @@ class CartEmpty extends StatelessWidget {
               fontSize: 36,
               fontWeight: FontWeight.w600),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         Text(
@@ -43,7 +44,7 @@ class CartEmpty extends StatelessWidget {
               fontSize: 26,
               fontWeight: FontWeight.w600),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
 
