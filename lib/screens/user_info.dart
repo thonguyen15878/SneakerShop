@@ -63,13 +63,13 @@ void initState(){
                               opacity: top <= 110.0 ? 1.0 : 0,
                               child: Row(
                                 children: [
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 12,
                                   ),
                                   Container(
                                    height: kToolbarHeight / 1.8,
                                     width: kToolbarHeight / 1.8,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
                                           color: Colors.white,
@@ -79,15 +79,15 @@ void initState(){
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: NetworkImage(
-                                            'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
+                                        image: AssetImage(
+                                            'assets/profile.png'),
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 12,
                                   ),
-                                  Text(
+                                  const Text(
                                     // 'top.toString()',
                                     'Guest',
                                     style: TextStyle(
@@ -98,9 +98,9 @@ void initState(){
                             ),
                           ],
                         ),
-                        background: Image(
-                          image: NetworkImage(
-                              'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
+                        background: const Image(
+                          image: AssetImage(
+                              'assets/profile.png'),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -120,11 +120,11 @@ void initState(){
                       thickness: 1,
                       color: Colors.grey,
                     ),
-                    userListTile('Email', 'Email sub' , 0, context),
-                    userListTile('Email', 'Email sub' , 0, context),
-                    userListTile('Email', 'Email sub' , 0, context),
-                    userListTile('Email', 'Email sub' , 0, context),
-                    userListTile('Email', 'Email sub' , 0, context),
+                    userListTile('Full name', 'nguyen huu tho' , 0, context),
+                    userListTile('Address', 'somewhere in the earth' , 0, context),
+                    userListTile('Date of birth', '9/9/2999' , 0, context),
+                    userListTile('Email', 'daylaAnhDuy@gmail.com' , 0, context),
+                    userListTile('instagram', 'daylaemDuy' , 0, context),
                     userListTile('Phone Number', '9999' , 0, context),
                     userListTile('Shipping address', '' , 0, context),
                     userListTile('joined date', 'date' , 0, context),
@@ -207,7 +207,7 @@ void initState(){
   }
 
 List<IconData> _userTileIcons = [
-  Icons.email,
+  Icons.face,
   Icons.phone,
   Icons.local_shipping,
   Icons.watch_later,

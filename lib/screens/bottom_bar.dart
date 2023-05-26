@@ -12,6 +12,8 @@ import 'package:sneakerstore/screens/sell.dart';
 import 'package:sneakerstore/screens/home.dart';
 import 'package:sneakerstore/screens/user_info.dart';
 
+import 'package:sneakerstore/screens/market.dart';
+
 class BottomBarScreen extends StatefulWidget {
   @override
   _BottomBarScreenState createState() => _BottomBarScreenState();
@@ -28,7 +30,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         'page': Home(),
       },
       {
-        'page': Sell(),
+        'page': Market(),
       },
       {
         'page': Search(),
@@ -55,13 +57,13 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
       body: _pages[_selectedPageIndex]['page'] as Widget,
       bottomNavigationBar: BottomAppBar(
         // color: Colors.white,
-        shape: CircularNotchedRectangle(),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 0.01,
         clipBehavior: Clip.antiAlias,
         child: Container(
           height: kBottomNavigationBarHeight * 0.98,
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               border: Border(
                 top: BorderSide(
@@ -76,7 +78,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
               unselectedItemColor: Theme.of(context).textTheme.bodyText1?.color,
               selectedItemColor: Colors.purple,
               currentIndex: _selectedPageIndex,
-              items: [
+              items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.home),
                   label: 'Home',

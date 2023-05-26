@@ -7,8 +7,14 @@ class Cart extends StatelessWidget{
   Widget build (BuildContext context){
     List products = [];
     return Scaffold(
+      body: ListView.builder(
+        itemCount: 140,
+        itemBuilder: (BuildContext context, int index) {
+          return CartFull();
+        },
+       ) ,
       // body: CartFull(),
-      body:products.isEmpty? CartEmpty() : CartFull(),
+      // body:products.isEmpty? CartEmpty() : CartFull(),
     );
   }
 }
