@@ -121,10 +121,10 @@ void initState(){
                       color: Colors.grey,
                     ),
                     userListTile('Full name', 'nguyen huu tho' , 0, context),
-                    userListTile('Address', 'somewhere in the earth' , 0, context),
+                    userListTile('Address', 'somewhere on earth' , 0, context),
                     userListTile('Date of birth', '9/9/2999' , 0, context),
                     userListTile('Email', 'daylaAnhDuy@gmail.com' , 0, context),
-                    userListTile('instagram', 'daylaemDuy' , 0, context),
+                    userListTile('Instagram', 'daylaemDuy' , 0, context),
                     userListTile('Phone Number', '9999' , 0, context),
                     userListTile('Shipping address', '' , 0, context),
                     userListTile('joined date', 'date' , 0, context),
@@ -149,7 +149,56 @@ void initState(){
                       switchActiveColor: Colors.indigo,
                       title: Text('Dark theme'),
                     ),
-                    userListTile('Logout', '',4, context),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () async {
+                            showDialog(context: context, builder: (BuildContext ctx) {
+                              return AlertDialog(
+                                title: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 6.0),
+                                      child: Image.network('https://unsplash.com/photos/G9i_plbfDgk',
+                                      height: 20,
+                                      width: 20,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text('Sign out'),
+                                    ),
+                                  ],
+                                ),
+                                content: Text('Do you wanna sign out?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () async {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Cancel')),
+                                  TextButton(
+                                    onPressed: () async {
+                                      await _auth.signOut().then(
+                                          (value) => Navigator.pop(context));
+                                    },
+                                    child: Text(
+                                      'OK',
+                                      style: TextStyle(color: Colors.red),
+                                    )
+                                  )
+                                ],
+                              );
+                            });
+                          },
+                          title: Text('Log out'),
+                          leading: Icon(Icons.exit_to_app_rounded),
+                        ),
+                      ),
+                    )
+
 
 
 
