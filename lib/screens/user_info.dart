@@ -180,10 +180,7 @@ void initState(){
                                     },
                                     child: Text('Cancel')),
                                   TextButton(
-                                    onPressed: () async {
-                                      await _auth.signOut().then(
-                                          (value) => Navigator.pop(context));
-                                    },
+                                    onPressed: () {},
                                     child: Text(
                                       'OK',
                                       style: TextStyle(color: Colors.red),

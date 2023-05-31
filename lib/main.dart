@@ -37,7 +37,7 @@ void getCurrentAppTheme() async {
     child: Consumer<DarkThemeProvider>(
         builder: (context, themeData, child) {
         return MaterialApp(
-          title: 'Flutter Demo',
+
           theme: Styles.themeData(themeChangeProvider.darkTheme, context) ,
           home: BottomBarScreen(),
         );

@@ -43,6 +43,9 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.1.1
   badges: ^3.1.1
+  backdrop: ^0.9.0
+  infinite_carousel: ^1.0.2
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +74,14 @@ flutter:
   assets:
     - assets/emptycart.png
     - assets/shoes.png
+    - assets/shoes1.png
+    - assets/shoes2.png
+    - assets/shoes3.png
+    - assets/shoes4.png
+    - assets/shoes5.png
+    - assets/shoes6.png
+    - assets/adidas.png
+    - assets/nike.png
     - assets/profile.png
 
 
