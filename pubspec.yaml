@@ -82,6 +82,8 @@ flutter:
     - assets/shoes6.png
     - assets/adidas.png
     - assets/nike.png
+    - assets/sneaker_for_men.png
+    - assets/sneaker_for_women.png
     - assets/profile.png
 
 
