@@ -12,6 +12,10 @@ class CategoryWidget extends StatelessWidget {
     {
       'categoryName': 'Sneaker for women',
       'categoryImagePath': 'assets/sneaker_for_women.png'
+    },
+    {
+      'categoryName': 'Sneaker for sport',
+      'categoryImagePath': 'assets/run_sneaker.png'
     }
   ];
 
@@ -25,6 +29,7 @@ class CategoryWidget extends StatelessWidget {
             image: DecorationImage(
               image:
                   AssetImage(categories[index]['categoryImagePath'] as String),
+              fit: BoxFit.cover
             ),
           ),
           margin: EdgeInsets.symmetric(horizontal: 10),
@@ -33,15 +38,18 @@ class CategoryWidget extends StatelessWidget {
         ),
         Positioned(
           bottom: 0,
+          left: 10,
+          right: 10,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             color: Theme.of(context).colorScheme.background,
             child: Text(
               categories[index]['categoryName'] as String,
               style: TextStyle(
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w400,
                   fontSize: 18,
-                  color: Theme.of(context).colorScheme.background
+                  // color: Theme.of(context).colorScheme.background
+                color: Colors.deepPurpleAccent
               ),
             ),
           ),

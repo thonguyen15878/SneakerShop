@@ -37,8 +37,9 @@ class Home extends StatelessWidget {
           child: Text("Back Layer"),
         ),
         frontLayer: SingleChildScrollView(
-          child: Column(
 
+          child: Column(
+crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CarouselSlider(
                   items: [
@@ -141,7 +142,7 @@ class Home extends StatelessWidget {
                 ),
                 Container(
                   height: 180,
-                  child: ListView.builder(itemCount: 7,
+                  child: ListView.builder(itemCount: 3,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext ctx, int index){
                       return CategoryWidget(index: index,);
