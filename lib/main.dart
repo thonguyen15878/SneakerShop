@@ -4,6 +4,7 @@ import 'package:sneakerstore/consts/theme_data.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
 
+import 'inner_screen/brands_navigation_rail.dart';
 import 'loader.dart';
 
 
@@ -40,6 +41,10 @@ void getCurrentAppTheme() async {
 
           theme: Styles.themeData(themeChangeProvider.darkTheme, context) ,
           home: BottomBarScreen(),
+            routes: {
+              BrandNavigationRailScreen.routeName: (ctx) =>
+                  BrandNavigationRailScreen(key: ValueKey('myKey'),)
+            }
         );
       }
     ));
