@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:sneakerstore/consts/theme_data.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
+import 'package:sneakerstore/screens/cart.dart';
+import 'package:sneakerstore/screens/wishlist.dart';
 
 import 'inner_screen/brands_navigation_rail.dart';
 import 'loader.dart';
@@ -43,7 +45,9 @@ void getCurrentAppTheme() async {
           home: BottomBarScreen(),
             routes: {
               BrandNavigationRailScreen.routeName: (ctx) =>
-                  BrandNavigationRailScreen(key: ValueKey('myKey'),)
+                  BrandNavigationRailScreen(key: ValueKey('myKey'),),
+              // CartScreen.routeName:  (ctx) => CartScreen(),
+              WishlistScreen.routeName:  (ctx) => WishlistScreen()
             }
         );
       }
