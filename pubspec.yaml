@@ -77,6 +77,7 @@ flutter:
 
   assets:
     - assets/emptycart.png
+    - assets/empty-cart.png
     - assets/shoes.png
     - assets/shoes1.png
     - assets/shoes2.png

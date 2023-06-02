@@ -4,6 +4,7 @@ import 'package:sneakerstore/consts/colors.dart';
 
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
+import 'package:sneakerstore/screens/wishlist.dart';
 
 class UserInfo extends StatefulWidget {
   @override
@@ -99,8 +100,8 @@ void initState(){
                           ],
                         ),
                         background: const Image(
-                          image: AssetImage(
-                              'assets/profile.png'),
+                          image: NetworkImage(
+                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz86LYlrR9TkR_BTQeKrEX5tUG5rSICCaR4g&usqp=CAU'),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -120,7 +121,43 @@ void initState(){
                       thickness: 1,
                       color: Colors.grey,
                     ),
-                    userListTile('Full name', 'nguyen huu tho' , 0, context),
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            splashColor: Theme.of(context).splashColor,
+            child: ListTile(
+              onTap: () => Navigator.of(context)
+                  .pushNamed(WishlistScreen.routeName),
+              title: Text('Wishlist'),
+              trailing: Icon(Icons.chevron_right_rounded),
+
+              leading: Icon(Icons.favorite,
+              color: Colors.red,),
+            ),
+          ),
+        ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () {},
+                          title: Text('Cart'),
+                          trailing: Icon(Icons.chevron_right_rounded),
+
+                          leading: Icon(Icons.shopping_cart,
+                            color: Colors.lightBlue,),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: userTitle('User Information')),
+                    Divider(
+                      thickness: 1,
+                      color: Colors.grey,
+                    ),
+                    userListTile('Full name', 'Anhhh Duyyy' , 0, context),
                     userListTile('Address', 'somewhere on earth' , 0, context),
                     userListTile('Date of birth', '9/9/2999' , 0, context),
                     userListTile('Email', 'daylaAnhDuy@gmail.com' , 0, context),

@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextFormField(
                           key: ValueKey('email'),
                           validator: (value) {
-                            if (value.isEmpty || !value.contains('@')) {
+                            if (value.toString().isEmpty || !value.toString().contains('@')) {
                               return 'Please enter a valid email address';
                             }
                             return null;
@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextFormField(
                           key: ValueKey('password'),
                           validator: (value) {
-                            if (value.isEmpty || value.length < 8) {
+                            if (value.toString().isEmpty || value.toString().length < 8) {
                               return 'Please enter another password';
                             }
                             return null;

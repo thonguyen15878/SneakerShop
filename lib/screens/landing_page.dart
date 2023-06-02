@@ -15,8 +15,8 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage>
     with TickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> _animation;
+  late AnimationController _animationController;
+  late Animation<double> _animation;
   List<String> images = [
     'https://unsplash.com/photos/Qe3kgY98OXs',
     'https://unsplash.com/photos/_kY6w94o-f0',
@@ -41,8 +41,8 @@ class _LandingPageState extends State<LandingPage>
     })
     ..addStatusListener((animationStatus) {
       if (animationStatus == AnimationStatus.completed) {
-        // _animationController.reset();
-        // _animationController.forward();
+        _animationController.reset();
+        _animationController.forward();
       }
     });
     _animationController.forward();
@@ -50,7 +50,7 @@ class _LandingPageState extends State<LandingPage>
 
   @override
   void dispose() {
-    // _animationController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -123,10 +123,10 @@ class _LandingPageState extends State<LandingPage>
                               ),
                             ),
                             SizedBox(width: 5),
-                            Icon(
-                                Feather.user,
-                                size: 18
-                            ),
+                            // Icon(
+                            //     Feather.user,
+                            //     size: 18
+                            // ),
                           ],
                         ),
                       ),
@@ -153,10 +153,10 @@ class _LandingPageState extends State<LandingPage>
                             ),
                           ),
                           SizedBox(width: 5),
-                          Icon(
-                            Feather.user_plus,
-                            size: 18
-                          ),
+                          // Icon(
+                          //   Feather.user_plus,
+                          //   size: 18
+                          // ),
                         ],
                       ),
                     ),
@@ -197,32 +197,38 @@ class _LandingPageState extends State<LandingPage>
                 children: [
                   OutlinedButton(
                     onPressed: (){},
-                    shape: StadiumBorder(),
-                    highlightBorderColor: Colors.red.shade200,
-                    borderSide: BorderSide(
-                      width: 2,
-                      color: Colors.red
-                    ),
+                    // style: ButtonStyle(
+                    //   shape: StadiumBorder(),
+                    //   highlightBorderColor: Colors.red.shade200,
+                    //   borderSide: BorderSide(
+                    //       width: 2,
+                    //       color: Colors.red
+                    //   ),
+                    // ),
                     child: Text('Google +'),
                   ),
                   OutlinedButton(
                     onPressed: (){},
-                    shape: StadiumBorder(),
-                    highlightBorderColor: Colors.blue.shade200,
-                    borderSide: BorderSide(
-                        width: 2,
-                        color: Colors.blue
-                    ),
+                    // style: ButtonStyle(
+                    //   shape: StadiumBorder(),
+                    //   highlightBorderColor: Colors.blue.shade200,
+                    //   borderSide: BorderSide(
+                    //       width: 2,
+                    //       color: Colors.blue
+                    //   ),
+                    // ),
                     child: Text('Facebook'),
                   ),
                   OutlinedButton(
                     onPressed: (){},
-                    shape: StadiumBorder(),
-                    highlightBorderColor: Colors.grey.shade200,
-                    borderSide: BorderSide(
-                        width: 2,
-                        color: Colors.grey
-                    ),
+                    // style: ButtonStyle(
+                    //   shape: StadiumBorder(),
+                    //   highlightBorderColor: Colors.grey.shade200,
+                    //   borderSide: BorderSide(
+                    //       width: 2,
+                    //       color: Colors.grey
+                    //   ),
+                    // ),
                     child: Text('Sign in as guest'),
                   ),
                 ],

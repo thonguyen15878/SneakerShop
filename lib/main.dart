@@ -5,6 +5,8 @@ import 'package:sneakerstore/providers/dark_theme_provider.dart';
 import 'package:sneakerstore/screens/auth/login.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
 import 'package:sneakerstore/screens/landing_page.dart';
+import 'package:sneakerstore/screens/cart.dart';
+import 'package:sneakerstore/screens/wishlist.dart';
 import 'inner_screen/brands_navigation_rail.dart';
 import 'loader.dart';
 
@@ -39,13 +41,16 @@ void getCurrentAppTheme() async {
     ],
     child: Consumer<DarkThemeProvider>(
         builder: (context, themeData, child) {
-          return LoginScreen();
+          // return LoginScreen();
         return MaterialApp(
           theme: Styles.themeData(themeChangeProvider.darkTheme, context) ,
           home: LandingPage(),
             routes: {
               BrandNavigationRailScreen.routeName: (ctx) => BrandNavigationRailScreen(key: ValueKey('myKey')),
               LoginScreen.routeName: (ctx) => LoginScreen(),
+              BrandNavigationRailScreen.routeName: (ctx) => BrandNavigationRailScreen(key: ValueKey('myKey')),
+              // CartScreen.routeName:  (ctx) => CartScreen(),
+              WishlistScreen.routeName:  (ctx) => WishlistScreen()
             },
         );
       },
