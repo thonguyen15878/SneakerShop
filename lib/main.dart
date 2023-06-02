@@ -45,14 +45,15 @@ void getCurrentAppTheme() async {
           // return LoginScreen();
         return MaterialApp(
           theme: Styles.themeData(themeChangeProvider.darkTheme, context) ,
-          home: LandingPage(),
+          home: BottomBarScreen(),
             routes: {
 
               BrandNavigationRailScreen.routeName: (ctx) => BrandNavigationRailScreen(key: ValueKey('myKey')),
               LoginScreen.routeName: (ctx) => LoginScreen(),
-              BrandNavigationRailScreen.routeName: (ctx) => BrandNavigationRailScreen(key: ValueKey('myKey')),
-              // CartScreen.routeName:  (ctx) => CartScreen(),
-              WishlistScreen.routeName:  (ctx) => WishlistScreen()
+
+              CartScreen.routeName:  (ctx) => CartScreen(),
+              WishlistScreen.routeName:  (ctx) => WishlistScreen(),
+              ProductDetails.routeName:  (ctx) => ProductDetails(),
             },
 
 
