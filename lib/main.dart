@@ -8,6 +8,7 @@ import 'package:sneakerstore/screens/landing_page.dart';
 import 'package:sneakerstore/screens/cart.dart';
 import 'package:sneakerstore/screens/wishlist.dart';
 import 'inner_screen/brands_navigation_rail.dart';
+import 'inner_screen/product_details.dart';
 import 'loader.dart';
 
 
@@ -46,12 +47,15 @@ void getCurrentAppTheme() async {
           theme: Styles.themeData(themeChangeProvider.darkTheme, context) ,
           home: LandingPage(),
             routes: {
+
               BrandNavigationRailScreen.routeName: (ctx) => BrandNavigationRailScreen(key: ValueKey('myKey')),
               LoginScreen.routeName: (ctx) => LoginScreen(),
               BrandNavigationRailScreen.routeName: (ctx) => BrandNavigationRailScreen(key: ValueKey('myKey')),
               // CartScreen.routeName:  (ctx) => CartScreen(),
               WishlistScreen.routeName:  (ctx) => WishlistScreen()
             },
+
+
         );
       },
     ),

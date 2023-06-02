@@ -7,7 +7,7 @@ import '../widget/cart_full.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
-  // static const routeName = '/CartScreen';
+  static const routeName = '/CartScreen';
   //To be known 1) the amount must be an integer 2) the amount must not be double 3) the minimum amount should be less than 0.5 $
   @override
   Widget build(BuildContext context) {
