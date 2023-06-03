@@ -43,12 +43,11 @@ void getCurrentAppTheme() async {
     ],
     child: Consumer<DarkThemeProvider>(
         builder: (context, themeData, child) {
-          // return LoginScreen();
+          // return LandingPage();
         return MaterialApp(
           theme: Styles.themeData(themeChangeProvider.darkTheme, context) ,
           home: BottomBarScreen(),
             routes: {
-
               BrandNavigationRailScreen.routeName: (ctx) => BrandNavigationRailScreen(key: ValueKey('myKey')),
               LoginScreen.routeName: (ctx) => LoginScreen(),
               RegisterScreen.routeName: (ctx) => RegisterScreen(),
@@ -56,8 +55,6 @@ void getCurrentAppTheme() async {
               WishlistScreen.routeName:  (ctx) => WishlistScreen(),
               ProductDetails.routeName:  (ctx) => ProductDetails(),
             },
-
-
         );
       },
     ),

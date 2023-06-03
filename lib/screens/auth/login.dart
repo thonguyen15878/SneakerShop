@@ -7,13 +7,14 @@ class LoginScreen extends StatefulWidget {
   static const routeName = '/LoginScreen';
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
   String _emailAddress = '';
   String _password = '';
+  bool _obsecureText = true;
 
   @override
   // void dispose() {}
@@ -111,6 +112,14 @@ class _LoginScreenState extends State<LoginScreen> {
                               border: const UnderlineInputBorder(),
                               filled: true,
                               prefixIcon: Icon(Icons.lock),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obsecureText = !_obsecureText;
+                                  });
+                                },
+                                child: Icon(_obsecureText ? Icons.visibility : Icons.visibility_off),
+                              ),
                               labelText: 'Password',
                               fillColor: Theme.of(context).colorScheme.background
                           ),

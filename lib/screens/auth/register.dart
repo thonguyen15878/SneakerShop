@@ -1,23 +1,28 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:sneakerstore/consts/colors.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routeName = '/RegisterScreen';
 
   @override
-  State<RegisterScreen> createState() => _RegisterScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formkey = GlobalKey<FormState>();
   String _username = '';
-  String _fullname = '';
   String _emailAddress = '';
   String _password = '';
   String _confirmPassword = '';
+  bool _obsecureText = true;
   late int _phoneNumber;
+  late File _pickedImage;
 
   @override
   // void dispose() {}
@@ -55,6 +60,126 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               children: [
                 SizedBox(height: 30),
+                Stack(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(
+                          vertical: 30,
+                          horizontal: 30
+                      ),
+                      child: CircleAvatar(
+                        radius: 71,
+                        backgroundColor: ColorsConsts.gradiendLEnd,
+                        child: CircleAvatar(
+                          radius: 65,
+                          // backgroundImage: _pickedImage == null ? null : FileImage(_pickedImage),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        top: 120,
+                        left: 120,
+                        child: RawMaterialButton(
+                          elevation: 10,
+                          fillColor: ColorsConsts.gradiendLEnd,
+                          child: Icon(Icons.add_a_photo),
+                          padding: EdgeInsets.all(15),
+                          shape: CircleBorder(),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                      title: Text(
+                                          'Choose an option',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: ColorsConsts.gradiendLStart
+                                        ),
+                                      ),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: [
+                                          InkWell(
+                                            // onTap: () {},
+                                            splashColor: HexColor('#f27f25'),
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8),
+                                                  child: Icon(
+                                                      Icons.camera,
+                                                      color: HexColor('#f27f25')
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Camera',
+                                                  style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: ColorsConsts.title
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          InkWell(
+                                            // onTap: () {},
+                                            splashColor: HexColor('#f27f25'),
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8),
+                                                  child: Icon(
+                                                      Icons.photo_album,
+                                                      color: HexColor('#f27f25')
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Gallery',
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.w500,
+                                                      color: ColorsConsts.title
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          InkWell(
+                                            // onTap: () {},
+                                            splashColor: HexColor('#f27f25'),
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8),
+                                                  child: Icon(
+                                                      Icons.remove_circle,
+                                                      color: HexColor('#f27f25')
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Remove profile picture',
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.w500,
+                                                      color: ColorsConsts.title
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                            );
+                          },
+                        ),
+                    ),
+                  ],
+                ),
                 Form(
                   key: _formkey,
                   child: Column(
@@ -80,30 +205,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           onSaved: (value) {
                             _username = value!;
-                          },
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: TextFormField(
-                          key: ValueKey('fullname'),
-                          validator: (value) {
-                            if (value.toString().isEmpty) {
-                              return 'Your full name cannot be empty!';
-                            }
-                            return null;
-                          },
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                              border: const UnderlineInputBorder(),
-                              filled: true,
-                              prefixIcon: Icon(Icons.person),
-                              labelText: 'Full name',
-                              fillColor: Theme.of(context).colorScheme.background
-                          ),
-                          onSaved: (value) {
-                            _fullname = value!;
                           },
                         ),
                       ),
@@ -177,6 +278,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               border: const UnderlineInputBorder(),
                               filled: true,
                               prefixIcon: Icon(Icons.lock),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obsecureText = !_obsecureText;
+                                  });
+                                },
+                                child: Icon(_obsecureText ? Icons.visibility : Icons.visibility_off),
+                              ),
                               labelText: 'Password',
                               fillColor: Theme.of(context).colorScheme.background
                           ),
@@ -207,6 +316,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               border: const UnderlineInputBorder(),
                               filled: true,
                               prefixIcon: Icon(Icons.lock),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _obsecureText = !_obsecureText;
+                                  });
+                                },
+                                child: Icon(_obsecureText ? Icons.visibility : Icons.visibility_off),
+                              ),
                               labelText: 'Confirm password',
                               fillColor: Theme.of(context).colorScheme.background
                           ),
@@ -215,31 +332,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 2,
-                              horizontal: 20
-                          ),
-                          child: TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              'Forget password?',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  decoration: TextDecoration.none
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                       SizedBox(width: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Sign up',
+                            'Join us',
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 fontSize: 17
