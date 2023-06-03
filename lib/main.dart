@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:sneakerstore/consts/theme_data.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
 import 'package:sneakerstore/screens/auth/login.dart';
+import 'package:sneakerstore/screens/auth/register.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
 import 'package:sneakerstore/screens/landing_page.dart';
 import 'package:sneakerstore/screens/cart.dart';
@@ -50,7 +51,7 @@ void getCurrentAppTheme() async {
 
               BrandNavigationRailScreen.routeName: (ctx) => BrandNavigationRailScreen(key: ValueKey('myKey')),
               LoginScreen.routeName: (ctx) => LoginScreen(),
-
+              RegisterScreen.routeName: (ctx) => RegisterScreen(),
               CartScreen.routeName:  (ctx) => CartScreen(),
               WishlistScreen.routeName:  (ctx) => WishlistScreen(),
               ProductDetails.routeName:  (ctx) => ProductDetails(),

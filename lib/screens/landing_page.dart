@@ -5,6 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sneakerstore/consts/colors.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:sneakerstore/screens/auth/login.dart';
+import 'package:sneakerstore/screens/auth/register.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -111,7 +113,7 @@ class _LandingPageState extends State<LandingPage>
                             side: BorderSide(color: ColorsConsts.backgroundColor),
                           ),)
                         ),
-                        onPressed: () {},
+                        onPressed: () {/*Navigator.pushNamed(context, LoginScreen.routeName);*/},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -141,7 +143,7 @@ class _LandingPageState extends State<LandingPage>
                             side: BorderSide(color: ColorsConsts.backgroundColor),
                           ),)
                       ),
-                      onPressed: () {},
+                      onPressed: () {/*Navigator.pushNamed(context, RegisterScreen.routeName);*/},
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

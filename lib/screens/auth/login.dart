@@ -14,6 +14,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
   String _emailAddress = '';
   String _password = '';
+
+  @override
+  // void dispose() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           key: ValueKey('email'),
                           validator: (value) {
                             if (value.toString().isEmpty || !value.toString().contains('@')) {
-                              return 'Please enter a valid email address';
+                              return 'Please enter a valid email address!';
                             }
                             return null;
                           },
@@ -93,8 +97,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: TextFormField(
                           key: ValueKey('password'),
                           validator: (value) {
-                            if (value.toString().isEmpty || value.toString().length < 8) {
-                              return 'Please enter another password';
+                            if (value.toString().isEmpty) {
+                              return 'Password cannot be empty!';
+                            }
+                            else if (value.toString().length < 8) {
+                              return 'Password must contain at least 8 characters!';
                             }
                             return null;
                           },
