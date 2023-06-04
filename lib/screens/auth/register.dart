@@ -332,20 +332,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           },
                         ),
                       ),
-                      SizedBox(width: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Join us',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17
+                          SizedBox(width: 10),
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  side: BorderSide(
+                                      color: ColorsConsts.backgroundColor
+                                  ),
+                                ),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Join us',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 17
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                              ],
                             ),
                           ),
-                          SizedBox(width: 5),
+                          SizedBox(width: 20),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 )

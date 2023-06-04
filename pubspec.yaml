@@ -51,6 +51,7 @@ dependencies:
   hexcolor: ^3.0.1
   wave: ^0.2.2
   image_picker: ^0.8.7+5
+  flutter_feather_icons: ^2.0.0+1
 
 dev_dependencies:
   flutter_test:

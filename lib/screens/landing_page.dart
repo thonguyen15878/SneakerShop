@@ -7,6 +7,7 @@ import 'package:sneakerstore/consts/colors.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sneakerstore/screens/auth/login.dart';
 import 'package:sneakerstore/screens/auth/register.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -113,7 +114,7 @@ class _LandingPageState extends State<LandingPage>
                             side: BorderSide(color: ColorsConsts.backgroundColor),
                           ),)
                         ),
-                        onPressed: () {/*Navigator.pushNamed(context, LoginScreen.routeName);*/},
+                        onPressed: () {Navigator.pushNamed(context, LoginScreen.routeName);},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -125,10 +126,10 @@ class _LandingPageState extends State<LandingPage>
                               ),
                             ),
                             SizedBox(width: 5),
-                            // Icon(
-                            //     Feather.user,
-                            //     size: 18
-                            // ),
+                            Icon(
+                                FeatherIcons.user,
+                                size: 18
+                            ),
                           ],
                         ),
                       ),
@@ -137,13 +138,15 @@ class _LandingPageState extends State<LandingPage>
                   Expanded(
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.white),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                        backgroundColor: MaterialStateProperty.all(HexColor('#e94436')),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0),
                             side: BorderSide(color: ColorsConsts.backgroundColor),
-                          ),)
+                            ),
+                          ),
                       ),
-                      onPressed: () {/*Navigator.pushNamed(context, RegisterScreen.routeName);*/},
+                      onPressed: () {Navigator.pushNamed(context, RegisterScreen.routeName);},
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -155,10 +158,10 @@ class _LandingPageState extends State<LandingPage>
                             ),
                           ),
                           SizedBox(width: 5),
-                          // Icon(
-                          //   Feather.user_plus,
-                          //   size: 18
-                          // ),
+                          Icon(
+                            FeatherIcons.userPlus,
+                            size: 18
+                          ),
                         ],
                       ),
                     ),
@@ -199,37 +202,31 @@ class _LandingPageState extends State<LandingPage>
                 children: [
                   OutlinedButton(
                     onPressed: (){},
-                    // style: ButtonStyle(
-                    //   shape: StadiumBorder(),
-                    //   highlightBorderColor: Colors.red.shade200,
-                    //   borderSide: BorderSide(
-                    //       width: 2,
-                    //       color: Colors.red
-                    //   ),
+                    // shape: StadiumBorder(),
+                    // highlightBorderColor: Colors.red.shade200,
+                    // borderSide: BorderSide(
+                    //     width: 2,
+                    //     color: Colors.red
                     // ),
                     child: Text('Google +'),
                   ),
                   OutlinedButton(
                     onPressed: (){},
-                    // style: ButtonStyle(
-                    //   shape: StadiumBorder(),
-                    //   highlightBorderColor: Colors.blue.shade200,
-                    //   borderSide: BorderSide(
-                    //       width: 2,
-                    //       color: Colors.blue
-                    //   ),
+                    // shape: StadiumBorder(),
+                    // highlightBorderColor: Colors.blue.shade200,
+                    // borderSide: BorderSide(
+                    //     width: 2,
+                    //     color: Colors.blue
                     // ),
                     child: Text('Facebook'),
                   ),
                   OutlinedButton(
                     onPressed: (){},
-                    // style: ButtonStyle(
-                    //   shape: StadiumBorder(),
-                    //   highlightBorderColor: Colors.grey.shade200,
-                    //   borderSide: BorderSide(
-                    //       width: 2,
-                    //       color: Colors.grey
-                    //   ),
+                    // shape: StadiumBorder(),
+                    // highlightBorderColor: Colors.grey.shade200,
+                    // borderSide: BorderSide(
+                    //     width: 2,
+                    //     color: Colors.grey
                     // ),
                     child: Text('Sign in as guest'),
                   ),

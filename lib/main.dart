@@ -12,7 +12,6 @@ import 'inner_screen/brands_navigation_rail.dart';
 import 'inner_screen/product_details.dart';
 import 'loader.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget{
@@ -22,43 +21,44 @@ class MyApp extends StatefulWidget{
 
 class _MyAppState extends State<MyApp> {
   DarkThemeProvider themeChangeProvider = DarkThemeProvider();
-void getCurrentAppTheme() async {
-  themeChangeProvider.darkTheme = await themeChangeProvider.darkThemePreferences.getTheme();
-}
-@override
-  void initState() {
 
-  getCurrentAppTheme();
+  void getCurrentAppTheme() async {
+    themeChangeProvider.darkTheme =
+    await themeChangeProvider.darkThemePreferences.getTheme();
+  }
+
+  @override
+  void initState() {
+    getCurrentAppTheme();
     super.initState();
   }
-  @override
-  Widget build(BuildContext context){
 
+  @override
+  Widget build(BuildContext context) {
     return MultiProvider(
-        providers: [
-      ChangeNotifierProvider(create: (_) {
+      providers: [
+        ChangeNotifierProvider(create: (_) {
           return themeChangeProvider;
-      },
-      ),
-    ],
-    child: Consumer<DarkThemeProvider>(
+        },
+        ),
+      ],
+      child: Consumer<DarkThemeProvider>(
         builder: (context, themeData, child) {
-          // return LandingPage();
-        return MaterialApp(
-          theme: Styles.themeData(themeChangeProvider.darkTheme, context) ,
-          home: BottomBarScreen(),
+          return MaterialApp(
+            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+            home: LandingPage(),
             routes: {
-              BrandNavigationRailScreen.routeName: (ctx) => BrandNavigationRailScreen(key: ValueKey('myKey')),
+              BrandNavigationRailScreen.routeName: (ctx) =>
+                  BrandNavigationRailScreen(key: ValueKey('myKey')),
               LoginScreen.routeName: (ctx) => LoginScreen(),
               RegisterScreen.routeName: (ctx) => RegisterScreen(),
-              CartScreen.routeName:  (ctx) => CartScreen(),
-              WishlistScreen.routeName:  (ctx) => WishlistScreen(),
-              ProductDetails.routeName:  (ctx) => ProductDetails(),
+              CartScreen.routeName: (ctx) => CartScreen(),
+              WishlistScreen.routeName: (ctx) => WishlistScreen(),
+              ProductDetails.routeName: (ctx) => ProductDetails(),
             },
-        );
-      },
-    ),
+          );
+        },
+      ),
     );
   }
 }
-
