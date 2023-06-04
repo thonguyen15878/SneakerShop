@@ -10,8 +10,8 @@ class Product with ChangeNotifier{
   final String brand;
   final int quantity;
   final bool isFavorite;
-  final bool isPopular;
 
 
-  Product({required this.id, required this.title, required this.description, required this.price, required this.imageUrl, required this.productCategoryName, required this.brand, required this.quantity, required this.isFavorite, required this.isPopular});
+
+  Product({required this.id, required this.title, required this.description, required this.price, required this.imageUrl, required this.productCategoryName, required this.brand, required this.quantity, required this.isFavorite});
 }
