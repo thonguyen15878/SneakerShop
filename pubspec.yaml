@@ -52,6 +52,7 @@ dependencies:
   wave: ^0.2.2
   image_picker: ^0.8.7+5
   flutter_feather_icons: ^2.0.0+1
+  cloud_firestore: ^4.8.0
 
 dev_dependencies:
   flutter_test:
