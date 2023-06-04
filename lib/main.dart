@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sneakerstore/consts/theme_data.dart';
+import 'package:sneakerstore/providers/cart_provider.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
+import 'package:sneakerstore/providers/favs_provider.dart';
+import 'package:sneakerstore/providers/orders_provider.dart';
+import 'package:sneakerstore/providers/products.dart';
 import 'package:sneakerstore/screens/auth/login.dart';
 import 'package:sneakerstore/screens/auth/register.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
@@ -39,7 +43,18 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) {
           return themeChangeProvider;
-        },
+        }),
+        ChangeNotifierProvider(
+          create: (_) => Products(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CartProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FavsProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => OrdersProvider(),
         ),
       ],
       child: Consumer<DarkThemeProvider>(
