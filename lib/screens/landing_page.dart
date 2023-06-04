@@ -62,17 +62,24 @@ class _LandingPageState extends State<LandingPage>
     return Scaffold(
       body: Stack(
         children: [
-          CachedNetworkImage(imageUrl: images[0],
-          placeholder: (context, url) => Image.network('https://unsplash.com/photos/_kY6w94o-f0',
-          fit: BoxFit.contain),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-          fit: BoxFit.cover,
-          height: double.infinity,
-          width: double.infinity,
-          alignment: FractionalOffset(_animation.value, 0),
+          Container(
+            color: Colors.white, // Set the background color to yellow
+            height: double.infinity,
+            width: double.infinity,
           ),
           Container(
-            margin: EdgeInsets.only(top: 30),
+            child: Image.asset('assets/shop.png',
+            // placeholder: (context, url) => Image.network('https://unsplash.com/photos/_kY6w94o-f0',
+            // fit: BoxFit.contain),
+            //   errorWidget: (context, url, error) => Icon(Icons.error),
+            // fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+            // alignment: FractionalOffset(_animation.value, 0),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 80),
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,17 +92,17 @@ class _LandingPageState extends State<LandingPage>
                   ),
                 ),
                 SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Text(
-                  'Welcome to Bazaar - The biggest online shoes marketplace',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.w400
-                  ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 30),
+                //   child: Text(
+                //   '',
+                //   textAlign: TextAlign.center,
+                //   style: TextStyle(
+                //     fontSize: 26,
+                //     fontWeight: FontWeight.w400
+                //   ),
+                //   ),
+                // ),
               ],
             ),
           ),

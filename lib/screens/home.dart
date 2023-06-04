@@ -19,20 +19,20 @@ class Home extends StatelessWidget {
             frontLayerBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
         headerHeight: MediaQuery.of(context).size.height * 0.25,
         appBar: BackdropAppBar(
-          title: Text("Home"),
+          title: Text("WELCOME TO BAZAAR"),
           leading: BackdropToggleButton(
             icon: AnimatedIcons.list_view,
           ),
           actions: <Widget>[
             IconButton(
-              iconSize: 15,
+              iconSize: 20,
               padding: const EdgeInsets.all(10),
               icon: CircleAvatar(
                 radius: 15,
                 backgroundColor: Colors.white,
                 child: CircleAvatar(
                   radius: 13,
-                  backgroundImage: AssetImage('assets/emptycart.png'),
+                  backgroundImage: AssetImage('assets/Bazaar.png'),
                 ),
               ),
               onPressed: () {},

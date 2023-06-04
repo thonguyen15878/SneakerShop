@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "722411127231",
+    "project_id": "bazaar-76799",
+    "storage_bucket": "bazaar-76799.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722411127231:android:9d8bf28dc4be40d500210a",
+        "android_client_info": {
+          "package_name": "com.example.sneakerstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722411127231-5ffs8671mi06jveg59rt2oec1dkdr7em.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ2YSePRFlpcYDz6ZfvU-wH1_s7QYO2xc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722411127231-5ffs8671mi06jveg59rt2oec1dkdr7em.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
