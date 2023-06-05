@@ -12,6 +12,7 @@ import 'package:sneakerstore/screens/auth/register.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
 import 'package:sneakerstore/screens/landing_page.dart';
 import 'package:sneakerstore/screens/cart.dart';
+import 'package:sneakerstore/screens/main_screen.dart';
 import 'package:sneakerstore/screens/user_state.dart';
 import 'package:sneakerstore/screens/wishlist.dart';
 import 'inner_screen/brands_navigation_rail.dart';
@@ -84,7 +85,7 @@ class _MyAppState extends State<MyApp> {
             builder: (context, themeData, child) {
               return MaterialApp(
                 theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-                home:LandingPage(),
+                home:UserState(),
                 routes: {
                   BrandNavigationRailScreen.routeName: (ctx) =>
                       BrandNavigationRailScreen(key: ValueKey('myKey')),

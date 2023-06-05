@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sneakerstore/consts/colors.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
 import 'package:sneakerstore/screens/wishlist.dart';
@@ -12,19 +13,33 @@ class UserInfo extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInfo> {
-
   late ScrollController _scrollController;
   var top = 0.0;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  late String _uid;
+  late String _name;
+  late String _email;
+  late String _joinedAt;
+  late String _userImageUrl;
+  late int _phoneNumber;
   @override
-void initState(){
+  void initState() {
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(() {setState(() {
-      });
-        });
+    _scrollController.addListener(() {
+      setState(() {});
+    });
+    getData();
   }
+  void getData() async {
+    User? user = _auth.currentUser;
+    _uid = user!.uid;
+
+    // print("name $_name");
+  }
+
   @override
-  Widget build (BuildContext context){
+  Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       body: Stack(
@@ -37,77 +52,74 @@ void initState(){
                 elevation: 4,
                 expandedHeight: 200,
                 pinned: true,
-                flexibleSpace: LayoutBuilder(
-                  builder: (BuildContext context, BoxConstraints constraints) {
-                    top = constraints.biggest.height;
-                    return Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                flexibleSpace: LayoutBuilder(builder:
+                    (BuildContext context, BoxConstraints constraints) {
+                  top = constraints.biggest.height;
+                  return Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
                           colors: [
                             ColorsConsts.starterColor,
                             ColorsConsts.endColor,
                           ],
                           begin: const FractionalOffset(0.0, 0.0),
-                          end:  const FractionalOffset(1.0, 0.0),
+                          end: const FractionalOffset(1.0, 0.0),
                           stops: [0.0, 1.0],
-                          tileMode: TileMode.clamp
-                        ),
-                      ),
-                      child: FlexibleSpaceBar(
-                        collapseMode: CollapseMode.parallax,
-                        centerTitle: true,
-                        title: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            AnimatedOpacity(
-                              duration: Duration(milliseconds: 300),
-                              opacity: top <= 110.0 ? 1.0 : 0,
-                              child: Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  Container(
-                                   height: kToolbarHeight / 1.8,
-                                    width: kToolbarHeight / 1.8,
-                                    decoration: const BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.white,
-                                          blurRadius: 1.0,
-                                        ),
-                                      ],
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.fill,
-                                        image: AssetImage(
-                                            'assets/profile.png'),
+                          tileMode: TileMode.clamp),
+                    ),
+                    child: FlexibleSpaceBar(
+                      collapseMode: CollapseMode.parallax,
+                      centerTitle: true,
+                      title: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          AnimatedOpacity(
+                            duration: Duration(milliseconds: 300),
+                            opacity: top <= 110.0 ? 1.0 : 0,
+                            child: Row(
+                              children: [
+                                const SizedBox(
+                                  width: 12,
+                                ),
+                                Container(
+                                  height: kToolbarHeight / 1.8,
+                                  width: kToolbarHeight / 1.8,
+                                  decoration: const BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.white,
+                                        blurRadius: 1.0,
                                       ),
+                                    ],
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: AssetImage('assets/profile.png'),
                                     ),
                                   ),
-                                  const SizedBox(
-                                    width: 12,
-                                  ),
-                                  const Text(
-                                    // 'top.toString()',
-                                    'Guest',
-                                    style: TextStyle(
-                                        fontSize: 20.0, color: Colors.white),
-                                  ),
-                                ],
-                              ),
+                                ),
+                                const SizedBox(
+                                  width: 12,
+                                ),
+                                const Text(
+                                  // 'top.toString()',
+                                  'Guest',
+                                  style: TextStyle(
+                                      fontSize: 20.0, color: Colors.white),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        background: const Image(
-                          image: NetworkImage(
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz86LYlrR9TkR_BTQeKrEX5tUG5rSICCaR4g&usqp=CAU'),
-                          fit: BoxFit.fill,
-                        ),
+                          ),
+                        ],
                       ),
-                    );
-                  }
-                ),
+                      background: const Image(
+                        image: NetworkImage(
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz86LYlrR9TkR_BTQeKrEX5tUG5rSICCaR4g&usqp=CAU'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  );
+                }),
               ),
               SliverToBoxAdapter(
                 child: Column(
@@ -121,21 +133,22 @@ void initState(){
                       thickness: 1,
                       color: Colors.grey,
                     ),
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            splashColor: Theme.of(context).splashColor,
-            child: ListTile(
-              onTap: () => Navigator.of(context)
-                  .pushNamed(WishlistScreen.routeName),
-              title: Text('Wishlist'),
-              trailing: Icon(Icons.chevron_right_rounded),
-
-              leading: Icon(Icons.favorite,
-              color: Colors.red,),
-            ),
-          ),
-        ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(WishlistScreen.routeName),
+                          title: Text('Wishlist'),
+                          trailing: Icon(Icons.chevron_right_rounded),
+                          leading: Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                          ),
+                        ),
+                      ),
+                    ),
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
@@ -144,9 +157,10 @@ void initState(){
                           onTap: () {},
                           title: Text('Cart'),
                           trailing: Icon(Icons.chevron_right_rounded),
-
-                          leading: Icon(Icons.shopping_cart,
-                            color: Colors.lightBlue,),
+                          leading: Icon(
+                            Icons.shopping_cart,
+                            color: Colors.lightBlue,
+                          ),
                         ),
                       ),
                     ),
@@ -157,14 +171,14 @@ void initState(){
                       thickness: 1,
                       color: Colors.grey,
                     ),
-                    userListTile('Full name', 'Anhhh Duyyy' , 0, context),
-                    userListTile('Address', 'somewhere on earth' , 0, context),
-                    userListTile('Date of birth', '9/9/2999' , 0, context),
-                    userListTile('Email', 'daylaAnhDuy@gmail.com' , 0, context),
-                    userListTile('Instagram', 'daylaemDuy' , 0, context),
-                    userListTile('Phone Number', '9999' , 0, context),
-                    userListTile('Shipping address', '' , 0, context),
-                    userListTile('joined date', 'date' , 0, context),
+                    userListTile('Full name', 'Anhhh Duyyy', 0, context),
+                    userListTile('Address', 'somewhere on earth', 0, context),
+                    userListTile('Date of birth', '9/9/2999', 0, context),
+                    userListTile('Email', 'daylaAnhDuy@gmail.com', 0, context),
+                    userListTile('Instagram', 'daylaemDuy', 0, context),
+                    userListTile('Phone Number', '9999', 0, context),
+                    userListTile('Shipping address', '', 0, context),
+                    userListTile('joined date', 'date', 0, context),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: userTitle('user settings'),
@@ -192,51 +206,54 @@ void initState(){
                         splashColor: Theme.of(context).splashColor,
                         child: ListTile(
                           onTap: () async {
-                            showDialog(context: context, builder: (BuildContext ctx) {
-                              return AlertDialog(
-                                title: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 6.0),
-                                      child: Image.network('https://unsplash.com/photos/G9i_plbfDgk',
-                                      height: 20,
-                                      width: 20,
-                                      ),
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext ctx) {
+                                  return AlertDialog(
+                                    title: Row(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 6.0),
+                                          child: Image.network(
+                                            'https://unsplash.com/photos/G9i_plbfDgk',
+                                            height: 20,
+                                            width: 20,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text('Sign out'),
+                                        ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text('Sign out'),
-                                    ),
-                                  ],
-                                ),
-                                content: Text('Do you wanna sign out?'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () async {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Cancel')),
-                                  TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      'OK',
-                                      style: TextStyle(color: Colors.red),
-                                    )
-                                  )
-                                ],
-                              );
-                            });
+                                    content: Text('Do you wanna sign out?'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () async {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Cancel')),
+                                      TextButton(
+                                          onPressed: ()  async {
+                                            await _auth.signOut().then(
+                                                    (value) =>
+                                                    Navigator.pop(context));
+                                          },
+                                          child: Text(
+                                            'OK',
+                                            style: TextStyle(color: Colors.red),
+                                          ))
+                                    ],
+                                  );
+                                });
                           },
                           title: Text('Log out'),
                           leading: Icon(Icons.exit_to_app_rounded),
                         ),
                       ),
                     )
-
-
-
-
-        ],
+                  ],
                 ),
               )
             ],
@@ -252,7 +269,7 @@ void initState(){
 
     final double scaleStart = 160.0;
 
-    final double scaleEnd = scaleStart / 2 ;
+    final double scaleEnd = scaleStart / 2;
 
     double top = defaultTopMargin;
     double scale = 1.0;
@@ -289,33 +306,34 @@ void initState(){
     );
   }
 
-List<IconData> _userTileIcons = [
-  Icons.face,
-  Icons.phone,
-  Icons.local_shipping,
-  Icons.watch_later,
-  Icons.exit_to_app_rounded
-];
+  List<IconData> _userTileIcons = [
+    Icons.face,
+    Icons.phone,
+    Icons.local_shipping,
+    Icons.watch_later,
+    Icons.exit_to_app_rounded
+  ];
 
   Widget userListTile(
-String title, String subTitle, int index, BuildContext context) {
+      String title, String subTitle, int index, BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
         splashColor: Theme.of(context).splashColor,
         child: ListTile(
-onTap: () {},
+          onTap: () {},
           title: Text(title),
           subtitle: Text(subTitle),
           leading: Icon(_userTileIcons[index]),
         ),
       ),
     );
-}
-Widget userTitle(String title) {
+  }
+
+  Widget userTitle(String title) {
     return Text(
       title,
-      style: TextStyle(fontWeight: FontWeight.bold , fontSize: 23),
+      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
     );
-}
+  }
 }

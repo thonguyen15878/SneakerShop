@@ -1,17 +1,17 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sneakerstore/consts/colors.dart';
+import 'package:sneakerstore/services/global_method.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:image_picker/image_picker.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-
-import '../../services/global_method.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routeName = '/RegisterScreen';
@@ -43,16 +43,69 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _phoneNumberFocusNode.dispose();
     super.dispose();
   }
-  void _submitForm()  {
+  void _submitForm()  async{
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     var date = DateTime.now().toString();
     var dateparse = DateTime.parse(date);
     var formattedDate = "${dateparse.day}-${dateparse.month}-${dateparse.year}";
     if (isValid) {
+      setState(() {
+              _isLoading = true;
+            });
       _formKey.currentState!.save();
-      _auth.createUserWithEmailAndPassword(email: _emailAddress, password: _password.trim());
+      try{
+       await _auth.createUserWithEmailAndPassword(email: _emailAddress.toLowerCase().trim(), password: _password.trim());
+      }catch(error ){
+        _globalMethods.authErrorHandle(error.toString(), context);
+        print('error occured ${error.toString()}');
+      }finally{
+        setState(() {
+                _isLoading = false;
+              });
+      }
 
+      // try {
+      //   if (_pickedImage == null) {
+      //     _globalMethods.authErrorHandle('Please pick an image', context);
+      //   } else {
+      //     setState(() {
+      //       _isLoading = true;
+      //     });
+      //     final ref = FirebaseStorage.instance
+      //         .ref()
+      //         .child('usersImages')
+      //         .child(_fullName + '.jpg');
+      //     await ref.putFile(_pickedImage);
+      //     url = await ref.getDownloadURL();
+      //     await _auth.createUserWithEmailAndPassword(
+      //         email: _emailAddress.toLowerCase().trim(),
+      //         password: _password.trim());
+      //     final User user = _auth.currentUser!;
+      //     final _uid = user.uid;
+      //     user.updatePhotoURL(url);
+      //     user.updateDisplayName(_fullName);
+      //
+      //     user.reload();
+      //     await FirebaseFirestore.instance.collection('users').doc(_uid).set({
+      //       'id': _uid,
+      //       'name': _fullName,
+      //       'email': _emailAddress,
+      //       'phoneNumber': _phoneNumber,
+      //       'imageUrl': url,
+      //       'joinedAt': formattedDate,
+      //       'createdAt': Timestamp.now(),
+      //     });
+      //     Navigator.canPop(context) ? Navigator.pop(context) : null;
+      //   }
+      // } catch (error) {
+      //   _globalMethods.authErrorHandle(error.message, context);
+      //   print('error occured ${error.message}');
+      // } finally {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      // }
     }
   }
 
@@ -107,12 +160,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ],
                     durations: [19440, 10800],
                     heightPercentages: [0.20, 0.25],
-                    blur: MaskFilter.blur(BlurStyle.solid, 10),
+                    blur: const MaskFilter.blur(BlurStyle.solid, 10),
                     gradientBegin: Alignment.bottomLeft,
                     gradientEnd: Alignment.topRight
                 ),
                 waveAmplitude: 0,
-                size: Size(
+                size: const Size(
                     double.infinity,
                     double.infinity
                 ),
@@ -122,11 +175,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
           SingleChildScrollView(
             child: Column(
               children: [
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Stack(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(
+                      margin: const EdgeInsets.symmetric(
                           vertical: 30,
                           horizontal: 30
                       ),
@@ -148,9 +201,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         child: RawMaterialButton(
                           elevation: 10,
                           fillColor: ColorsConsts.gradiendLEnd,
-                          child: Icon(Icons.add_a_photo),
-                          padding: EdgeInsets.all(15),
-                          shape: CircleBorder(),
+                          child: const Icon(Icons.add_a_photo),
+                          padding: const EdgeInsets.all(15),
+                          shape: const CircleBorder(),
                           onPressed: () {
                             showDialog(
                                 context: context,
@@ -253,7 +306,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: TextFormField(
-                          key: ValueKey('username'),
+                          key: const ValueKey('username'),
                           validator: (value) {
                             if (value.toString().isEmpty) {
                               return 'Username cannot be empty!';
@@ -265,7 +318,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: InputDecoration(
                               border: const UnderlineInputBorder(),
                               filled: true,
-                              prefixIcon: Icon(Icons.person),
+                              prefixIcon: const Icon(Icons.person),
                               labelText: 'Username',
                               fillColor: Theme.of(context).colorScheme.background
                           ),
@@ -277,10 +330,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: TextFormField(
-                          key: ValueKey('email'),
+                          key: const ValueKey('email'),
                           focusNode: _emailFocusNode,
                           validator: (value) {
-                            if (value.toString().isEmpty || value.toString().contains('@')) {
+                            if (value.toString().isEmpty || !value.toString().contains('@')) {
                               return 'Please enter a valid email address!';
                             }
                             return null;
@@ -292,7 +345,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: InputDecoration(
                               border: const UnderlineInputBorder(),
                               filled: true,
-                              prefixIcon: Icon(Icons.email),
+                              prefixIcon: const Icon(Icons.email),
                               labelText: 'Email',
                               fillColor: Theme.of(context).colorScheme.background
                           ),
@@ -304,7 +357,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: TextFormField(
-                          key: ValueKey('phone number'),
+                          key: const ValueKey('phone number'),
                           focusNode: _phoneNumberFocusNode,
                           validator: (value) {
                             if (value.toString().isEmpty) {
@@ -324,7 +377,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: InputDecoration(
                               border: const UnderlineInputBorder(),
                               filled: true,
-                              prefixIcon: Icon(Icons.phone_android),
+                              prefixIcon: const Icon(Icons.phone_android),
                               labelText: 'Phone number',
                               fillColor: Theme.of(context).colorScheme.background
                           ),
@@ -336,7 +389,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Padding(
                         padding: const EdgeInsets.all(12),
                         child: TextFormField(
-                          key: ValueKey('password'),
+                          key: const ValueKey('password'),
                           validator: (value) {
                             if (value.toString().isEmpty) {
                               return 'Password cannot be empty!';
@@ -352,7 +405,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           decoration: InputDecoration(
                               border: const UnderlineInputBorder(),
                               filled: true,
-                              prefixIcon: Icon(Icons.lock),
+                              prefixIcon: const Icon(Icons.lock),
                               suffixIcon: GestureDetector(
                                 onTap: () {
                                   setState(() {
@@ -416,9 +469,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           _isLoading
-                              ? CircularProgressIndicator()
+                              ? const CircularProgressIndicator()
                               : ElevatedButton(
 
                             style: ButtonStyle(
@@ -446,7 +499,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ],
                             ),
                           ),
-                          SizedBox(width: 20),
+                          const SizedBox(width: 20),
                         ],
                       ),
                     ],
