@@ -15,6 +15,7 @@ import 'package:sneakerstore/screens/user_info.dart';
 import 'package:sneakerstore/screens/market.dart';
 
 class BottomBarScreen extends StatefulWidget {
+  static const routeName = '/BottomBarScreen';
   @override
   _BottomBarScreenState createState() => _BottomBarScreenState();
 }
@@ -75,7 +76,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
             child: BottomNavigationBar(
               onTap: _selectPage,
               backgroundColor: Theme.of(context).primaryColor,
-              unselectedItemColor: Theme.of(context).textTheme.bodyText1?.color,
+              unselectedItemColor: Theme.of(context).textSelectionTheme.selectionColor,
               selectedItemColor: Colors.purple,
               currentIndex: _selectedPageIndex,
               items: const [

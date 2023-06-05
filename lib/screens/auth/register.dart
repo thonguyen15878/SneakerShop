@@ -24,13 +24,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _emailFocusNode = FocusNode();
   final FocusNode _phoneNumberFocusNode = FocusNode();
-  final _formkey = GlobalKey<FormState>();
+
   bool _obscureText = true;
   String _emailAddress = '';
   String _password = '';
   String _fullName = '';
   late int _phoneNumber;
-  late File _pickedImage;
+   File? _pickedImage;
   late String url;
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -43,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _phoneNumberFocusNode.dispose();
     super.dispose();
   }
-  void _submitForm() async {
+  void _submitForm()  {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
     var date = DateTime.now().toString();
@@ -51,54 +51,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
     var formattedDate = "${dateparse.day}-${dateparse.month}-${dateparse.year}";
     if (isValid) {
       _formKey.currentState!.save();
-      try {
-        if (_pickedImage == null) {
-          _globalMethods.authErrorHandle('Please pick an image', context);
-        } else {
-          setState(() {
-            _isLoading = true;
-          });
-          final ref = FirebaseStorage.instance
-              .ref()
-              .child('usersImages')
-              .child(_fullName + '.jpg');
-          await ref.putFile(_pickedImage);
-          url = await ref.getDownloadURL();
-          await _auth.createUserWithEmailAndPassword(
-              email: _emailAddress.toLowerCase().trim(),
-              password: _password.trim());
-          final User user = _auth.currentUser!;
-          final _uid = user.uid;
-          user.updatePhotoURL(url);
-          user.updateDisplayName(_fullName);
+      _auth.createUserWithEmailAndPassword(email: _emailAddress, password: _password.trim());
 
-          user.reload();
-          await FirebaseFirestore.instance.collection('users').doc(_uid).set({
-            'id': _uid,
-            'name': _fullName,
-            'email': _emailAddress,
-            'phoneNumber': _phoneNumber,
-            'imageUrl': url,
-            'joinedAt': formattedDate,
-            'createdAt': Timestamp.now(),
-          });
-          Navigator.canPop(context) ? Navigator.pop(context) : null;
-        }
-      } catch (error) {
-        // _globalMethods.authErrorHandle(error.message, context);
-        // print('error occured ${error.message}');
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
-      }
     }
   }
 
   void _pickImageCamera() async {
     final picker = ImagePicker();
     final pickedImage =
-    await picker.getImage(source: ImageSource.camera, imageQuality: 10);
+    await picker.pickImage(source: ImageSource.camera, imageQuality: 10);
+    if (pickedImage == null) {
+      return; // User canceled image picking
+    }
     final pickedImageFile = File(pickedImage!.path);
     setState(() {
       _pickedImage = pickedImageFile;
@@ -109,6 +73,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _pickImageGallery() async {
     final picker = ImagePicker();
     final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage == null) {
+      return; // User canceled image picking
+    }
     final pickedImageFile = File(pickedImage!.path);
     setState(() {
       _pickedImage = pickedImageFile;
@@ -171,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           backgroundColor: ColorsConsts.gradiendFEnd,
                           backgroundImage: _pickedImage == null
                               ? null
-                              : FileImage(_pickedImage),
+                              : FileImage(_pickedImage!),
                         ),
                       ),
                     ),
@@ -280,7 +247,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ],
                 ),
                 Form(
-                  key: _formkey,
+                  key: _formKey,
                   child: Column(
                     children: [
                       Padding(
@@ -338,6 +305,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: const EdgeInsets.all(12),
                         child: TextFormField(
                           key: ValueKey('phone number'),
+                          focusNode: _phoneNumberFocusNode,
                           validator: (value) {
                             if (value.toString().isEmpty) {
                               return 'Phone number cannot be empty!';

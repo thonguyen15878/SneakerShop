@@ -8,6 +8,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:sneakerstore/screens/auth/login.dart';
 import 'package:sneakerstore/screens/auth/register.dart';
 import 'package:flutter_feather_icons/flutter_feather_icons.dart';
+import 'package:sneakerstore/services/global_method.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -32,7 +36,9 @@ class _LandingPageState extends State<LandingPage>
     'https://unsplash.com/photos/goNZjZWa5CY',
     'https://unsplash.com/photos/oARPb2dEOtQ'
   ];
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  GlobalMethods _globalMethods = GlobalMethods();
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -56,7 +62,57 @@ class _LandingPageState extends State<LandingPage>
     _animationController.dispose();
     super.dispose();
   }
+  Future<void> _googleSignIn() async {
+    final googleSignIn = GoogleSignIn();
+    final googleAccount = await googleSignIn.signIn();
+    if (googleAccount != null) {
+      final googleAuth = await googleAccount.authentication;
+      if (googleAuth.accessToken != null && googleAuth.idToken != null) {
+        try {
+          var date = DateTime.now().toString();
+          var dateparse = DateTime.parse(date);
+          var formattedDate =
+              "${dateparse.day}-${dateparse.month}-${dateparse.year}";
+          final authResult = await _auth.signInWithCredential(
+              GoogleAuthProvider.credential(
+                  idToken: googleAuth.idToken,
+                  accessToken: googleAuth.accessToken));
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(authResult.user!.uid)
+              .set({
+            'id': authResult.user!.uid,
+            'name': authResult.user!.displayName,
+            'email': authResult.user!.email,
+            'phoneNumber': authResult.user!.phoneNumber,
+            'imageUrl': authResult.user!.photoURL,
+            'joinedAt': formattedDate,
+            'createdAt': Timestamp.now(),
+          });
+        } catch (error) {
+          // _globalMethods.authErrorHandle(error.message, context);
+        }
+      }
+    }
+  }
+  void _loginAnonymosly() async {
+    setState(() {
+      _isLoading = true;
+    });
 
+    try {
+      await _auth.signInAnonymously();
+    }
+    // catch (error) {
+    //   _globalMethods.authErrorHandle(error.message, context);
+    //   print('error occured ${error.message}');
+    // }
+    finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,7 +264,7 @@ class _LandingPageState extends State<LandingPage>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   OutlinedButton(
-                    onPressed: (){},
+                    onPressed: _googleSignIn,
                     // shape: StadiumBorder(),
                     // highlightBorderColor: Colors.red.shade200,
                     // borderSide: BorderSide(
@@ -227,8 +283,10 @@ class _LandingPageState extends State<LandingPage>
                     // ),
                     child: Text('Facebook'),
                   ),
-                  OutlinedButton(
-                    onPressed: (){},
+                  _isLoading
+                      ? CircularProgressIndicator()
+                      : OutlinedButton(
+                    onPressed: (){_loginAnonymosly();},
                     // shape: StadiumBorder(),
                     // highlightBorderColor: Colors.grey.shade200,
                     // borderSide: BorderSide(

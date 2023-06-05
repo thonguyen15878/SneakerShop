@@ -12,10 +12,12 @@ import 'package:sneakerstore/screens/auth/register.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
 import 'package:sneakerstore/screens/landing_page.dart';
 import 'package:sneakerstore/screens/cart.dart';
+import 'package:sneakerstore/screens/user_state.dart';
 import 'package:sneakerstore/screens/wishlist.dart';
 import 'inner_screen/brands_navigation_rail.dart';
 import 'inner_screen/product_details.dart';
 import 'loader.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() => runApp(MyApp());
 
@@ -37,45 +39,68 @@ class _MyAppState extends State<MyApp> {
     getCurrentAppTheme();
     super.initState();
   }
-
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) {
-          return themeChangeProvider;
-        }),
-        ChangeNotifierProvider(
-          create: (_) => Products(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => CartProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => FavsProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => OrdersProvider(),
-        ),
-      ],
-      child: Consumer<DarkThemeProvider>(
-        builder: (context, themeData, child) {
+    return FutureBuilder<Object>(
+        future: _initialization,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return MaterialApp(
-            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-            home:(),
-            routes: {
-              BrandNavigationRailScreen.routeName: (ctx) =>
-                  BrandNavigationRailScreen(key: ValueKey('myKey')),
-              LoginScreen.routeName: (ctx) => LoginScreen(),
-              RegisterScreen.routeName: (ctx) => RegisterScreen(),
-              CartScreen.routeName: (ctx) => CartScreen(),
-              WishlistScreen.routeName: (ctx) => WishlistScreen(),
-              ProductDetails.routeName: (ctx) => ProductDetails(),
-              ForgetPassword.routeName: (ctx) => ForgetPassword(),
-            },
+            home: Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
           );
-        },
-      ),
+        } else if (snapshot.hasError) {
+          MaterialApp(
+            home: Scaffold(
+              body: Center(
+                child: Text('Error occured'),
+              ),
+            ),
+          );
+        }
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) {
+              return themeChangeProvider;
+            }),
+            ChangeNotifierProvider(
+              create: (_) => Products(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => CartProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => FavsProvider(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => OrdersProvider(),
+            ),
+          ],
+          child: Consumer<DarkThemeProvider>(
+            builder: (context, themeData, child) {
+              return MaterialApp(
+                theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+                home:LandingPage(),
+                routes: {
+                  BrandNavigationRailScreen.routeName: (ctx) =>
+                      BrandNavigationRailScreen(key: ValueKey('myKey')),
+                  LoginScreen.routeName: (ctx) => LoginScreen(),
+                  RegisterScreen.routeName: (ctx) => RegisterScreen(),
+                  CartScreen.routeName: (ctx) => CartScreen(),
+                  WishlistScreen.routeName: (ctx) => WishlistScreen(),
+                  ProductDetails.routeName: (ctx) => ProductDetails(),
+                  ForgetPassword.routeName: (ctx) => ForgetPassword(),
+                  BottomBarScreen.routeName: (ctx) => BottomBarScreen(),
+                },
+              );
+            },
+          ),
+        );
+      }
     );
   }
 }
