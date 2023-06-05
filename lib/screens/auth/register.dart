@@ -1,11 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:sneakerstore/consts/colors.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+import '../../services/global_method.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routeName = '/RegisterScreen';
@@ -15,17 +21,107 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final FocusNode _passwordFocusNode = FocusNode();
+  final FocusNode _emailFocusNode = FocusNode();
+  final FocusNode _phoneNumberFocusNode = FocusNode();
   final _formkey = GlobalKey<FormState>();
-  String _username = '';
+  bool _obscureText = true;
   String _emailAddress = '';
   String _password = '';
-  String _confirmPassword = '';
-  bool _obsecureText = true;
+  String _fullName = '';
   late int _phoneNumber;
   late File _pickedImage;
-
+  late String url;
+  final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  GlobalMethods _globalMethods = GlobalMethods();
+  bool _isLoading = false;
   @override
-  // void dispose() {}
+  void dispose() {
+    _passwordFocusNode.dispose();
+    _emailFocusNode.dispose();
+    _phoneNumberFocusNode.dispose();
+    super.dispose();
+  }
+  void _submitForm() async {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+    var date = DateTime.now().toString();
+    var dateparse = DateTime.parse(date);
+    var formattedDate = "${dateparse.day}-${dateparse.month}-${dateparse.year}";
+    if (isValid) {
+      _formKey.currentState!.save();
+      try {
+        if (_pickedImage == null) {
+          _globalMethods.authErrorHandle('Please pick an image', context);
+        } else {
+          setState(() {
+            _isLoading = true;
+          });
+          final ref = FirebaseStorage.instance
+              .ref()
+              .child('usersImages')
+              .child(_fullName + '.jpg');
+          await ref.putFile(_pickedImage);
+          url = await ref.getDownloadURL();
+          await _auth.createUserWithEmailAndPassword(
+              email: _emailAddress.toLowerCase().trim(),
+              password: _password.trim());
+          final User user = _auth.currentUser!;
+          final _uid = user.uid;
+          user.updatePhotoURL(url);
+          user.updateDisplayName(_fullName);
+
+          user.reload();
+          await FirebaseFirestore.instance.collection('users').doc(_uid).set({
+            'id': _uid,
+            'name': _fullName,
+            'email': _emailAddress,
+            'phoneNumber': _phoneNumber,
+            'imageUrl': url,
+            'joinedAt': formattedDate,
+            'createdAt': Timestamp.now(),
+          });
+          Navigator.canPop(context) ? Navigator.pop(context) : null;
+        }
+      } catch (error) {
+        // _globalMethods.authErrorHandle(error.message, context);
+        // print('error occured ${error.message}');
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
+
+  void _pickImageCamera() async {
+    final picker = ImagePicker();
+    final pickedImage =
+    await picker.getImage(source: ImageSource.camera, imageQuality: 10);
+    final pickedImageFile = File(pickedImage!.path);
+    setState(() {
+      _pickedImage = pickedImageFile;
+    });
+    Navigator.pop(context);
+  }
+
+  void _pickImageGallery() async {
+    final picker = ImagePicker();
+    final pickedImage = await picker.pickImage(source: ImageSource.gallery);
+    final pickedImageFile = File(pickedImage!.path);
+    setState(() {
+      _pickedImage = pickedImageFile;
+    });
+    Navigator.pop(context);
+  }
+
+  void _remove() {
+    setState(() {
+      _pickedImage;
+    });
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +168,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         backgroundColor: ColorsConsts.gradiendLEnd,
                         child: CircleAvatar(
                           radius: 65,
-                          // backgroundImage: _pickedImage == null ? null : FileImage(_pickedImage),
+                          backgroundColor: ColorsConsts.gradiendFEnd,
+                          backgroundImage: _pickedImage == null
+                              ? null
+                              : FileImage(_pickedImage),
                         ),
                       ),
                     ),
@@ -101,7 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       child: ListBody(
                                         children: [
                                           InkWell(
-                                            // onTap: () {},
+                                            onTap: _pickImageCamera,
                                             splashColor: HexColor('#f27f25'),
                                             child: Row(
                                               children: [
@@ -147,7 +246,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             ),
                                           ),
                                           InkWell(
-                                            // onTap: () {},
+                                            onTap: _remove,
                                             splashColor: HexColor('#f27f25'),
                                             child: Row(
                                               children: [
@@ -204,7 +303,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               fillColor: Theme.of(context).colorScheme.background
                           ),
                           onSaved: (value) {
-                            _username = value!;
+                            _fullName = value!;
                           },
                         ),
                       ),
@@ -212,6 +311,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: const EdgeInsets.all(12),
                         child: TextFormField(
                           key: ValueKey('email'),
+                          focusNode: _emailFocusNode,
                           validator: (value) {
                             if (value.toString().isEmpty || value.toString().contains('@')) {
                               return 'Please enter a valid email address!';
@@ -219,6 +319,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return null;
                           },
                           textInputAction: TextInputAction.next,
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_passwordFocusNode),
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                               border: const UnderlineInputBorder(),
@@ -245,7 +347,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                             return null;
                           },
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           textInputAction: TextInputAction.next,
+                          onEditingComplete: _submitForm,
                           keyboardType: TextInputType.phone,
                           decoration: InputDecoration(
                               border: const UnderlineInputBorder(),
@@ -272,8 +378,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             }
                             return null;
                           },
-                          textInputAction: TextInputAction.next,
+
                           keyboardType: TextInputType.emailAddress,
+                          focusNode: _passwordFocusNode,
                           decoration: InputDecoration(
                               border: const UnderlineInputBorder(),
                               filled: true,
@@ -281,10 +388,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               suffixIcon: GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    _obsecureText = !_obsecureText;
+                                    _obscureText = !_obscureText;
                                   });
                                 },
-                                child: Icon(_obsecureText ? Icons.visibility : Icons.visibility_off),
+                                child: Icon(_obscureText
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
                               ),
                               labelText: 'Password',
                               fillColor: Theme.of(context).colorScheme.background
@@ -292,52 +401,58 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onSaved: (value) {
                             _password = value!;
                           },
+                          obscureText: _obscureText,
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_phoneNumberFocusNode),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: TextFormField(
-                          key: ValueKey('confirm password'),
-                          validator: (value) {
-                            if (value.toString().isEmpty) {
-                              return 'Password cannot be empty!';
-                            }
-                            else if (value.toString().length < 8) {
-                              return 'Password must contain at least 8 characters!';
-                            }
-                            else if (value.toString() != _password) {
-                              return 'Wrong password! Try again.';
-                            }
-                            return null;
-                          },
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                              border: const UnderlineInputBorder(),
-                              filled: true,
-                              prefixIcon: Icon(Icons.lock),
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _obsecureText = !_obsecureText;
-                                  });
-                                },
-                                child: Icon(_obsecureText ? Icons.visibility : Icons.visibility_off),
-                              ),
-                              labelText: 'Confirm password',
-                              fillColor: Theme.of(context).colorScheme.background
-                          ),
-                          onSaved: (value) {
-                            _confirmPassword = value!;
-                          },
-                        ),
-                      ),
+
+                      // Padding(
+                      //   padding: const EdgeInsets.all(12),
+                      //   child: TextFormField(
+                      //     key: ValueKey('confirm password'),
+                      //     validator: (value) {
+                      //       if (value.toString().isEmpty) {
+                      //         return 'Password cannot be empty!';
+                      //       }
+                      //       else if (value.toString().length < 8) {
+                      //         return 'Password must contain at least 8 characters!';
+                      //       }
+                      //       else if (value.toString() != _password) {
+                      //         return 'Wrong password! Try again.';
+                      //       }
+                      //       return null;
+                      //     },
+                      //     textInputAction: TextInputAction.next,
+                      //     keyboardType: TextInputType.emailAddress,
+                      //     decoration: InputDecoration(
+                      //         border: const UnderlineInputBorder(),
+                      //         filled: true,
+                      //         prefixIcon: Icon(Icons.lock),
+                      //         suffixIcon: GestureDetector(
+                      //           onTap: () {
+                      //             setState(() {
+                      //               _obscureText = !_obscureText;
+                      //             });
+                      //           },
+                      //           child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+                      //         ),
+                      //         labelText: 'Confirm password',
+                      //         fillColor: Theme.of(context).colorScheme.background
+                      //     ),
+                      //     onSaved: (value) {
+                      //       _confirmPassword = value!;
+                      //     },
+                      //   ),
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(width: 10),
-                          ElevatedButton(
-                            onPressed: () {},
+                          _isLoading
+                              ? CircularProgressIndicator()
+                              : ElevatedButton(
+
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -348,9 +463,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                             ),
+                            onPressed: _submitForm,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
+                              children: const [
                                 Text(
                                   'Join us',
                                   style: TextStyle(

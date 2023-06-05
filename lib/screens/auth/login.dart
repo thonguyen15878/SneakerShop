@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:sneakerstore/consts/colors.dart';
 import 'package:wave/config.dart';
 import 'package:wave/wave.dart';
+import 'package:sneakerstore/services/global_method.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+import 'forget_password.dart';
 class LoginScreen extends StatefulWidget {
   static const routeName = '/LoginScreen';
 
@@ -11,13 +14,46 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formkey = GlobalKey<FormState>();
+  final FocusNode _passwordFocusNode = FocusNode();
+  bool _obscureText = true;
   String _emailAddress = '';
   String _password = '';
-  bool _obsecureText = true;
-
+  final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GlobalMethods _globalMethods = GlobalMethods();
+  bool _isLoading = false;
   @override
-  // void dispose() {}
+  void dispose() {
+    _passwordFocusNode.dispose();
+    super.dispose();
+  }
+
+  void _submitForm() async {
+    final isValid = _formKey.currentState!.validate();
+    FocusScope.of(context).unfocus();
+    if (isValid) {
+      setState(() {
+        _isLoading = true;
+      });
+      _formKey.currentState!.save();
+      try {
+        await _auth
+            .signInWithEmailAndPassword(
+            email: _emailAddress.toLowerCase().trim(),
+            password: _password.trim())
+            .then((value) =>
+        Navigator.canPop(context) ? Navigator.pop(context) : null);}
+      // } catch (error) {
+      //   _globalMethods.authErrorHandle(error.message, context);
+      //   print('error occured ${error.message}');
+      // }
+      finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 30),
                 Form(
-                  key: _formkey,
+                  key: _formKey,
                   child: Column(
                     children: [
                       Padding(
@@ -80,6 +116,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             return null;
                           },
                           textInputAction: TextInputAction.next,
+                          onEditingComplete: () => FocusScope.of(context)
+                              .requestFocus(_passwordFocusNode),
                           keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             border: const UnderlineInputBorder(),
@@ -108,6 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.emailAddress,
+                          focusNode: _passwordFocusNode,
                           decoration: InputDecoration(
                               border: const UnderlineInputBorder(),
                               filled: true,
@@ -115,10 +154,10 @@ class _LoginScreenState extends State<LoginScreen> {
                               suffixIcon: GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    _obsecureText = !_obsecureText;
+                                    _obscureText = !_obscureText;
                                   });
                                 },
-                                child: Icon(_obsecureText ? Icons.visibility : Icons.visibility_off),
+                                child: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
                               ),
                               labelText: 'Password',
                               fillColor: Theme.of(context).colorScheme.background
@@ -126,6 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           onSaved: (value) {
                             _password = value!;
                           },
+                          obscureText: _obscureText,
+                          onEditingComplete: _submitForm,
                         ),
                       ),
                       Align(
@@ -136,7 +177,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             horizontal: 20
                           ),
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () { Navigator.pushNamed(
+                                context, ForgetPassword.routeName);},
                             child: Text(
                               'Forget password?',
                               style: TextStyle(
@@ -151,8 +193,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SizedBox(width: 10),
-                          ElevatedButton(
-                            onPressed: () {},
+                          _isLoading
+                              ? CircularProgressIndicator()
+                              : ElevatedButton(
+
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -163,6 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                               ),
                             ),
+                            onPressed: _submitForm,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
