@@ -196,7 +196,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           _isLoading
                               ? CircularProgressIndicator()
                               : ElevatedButton(
-
                             style: ButtonStyle(
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -227,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

@@ -6,6 +6,7 @@ import 'package:sneakerstore/providers/dark_theme_provider.dart';
 import 'package:sneakerstore/providers/favs_provider.dart';
 import 'package:sneakerstore/providers/orders_provider.dart';
 import 'package:sneakerstore/providers/products.dart';
+import 'package:sneakerstore/screens/auth/forget_password.dart';
 import 'package:sneakerstore/screens/auth/login.dart';
 import 'package:sneakerstore/screens/auth/register.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
@@ -61,7 +62,7 @@ class _MyAppState extends State<MyApp> {
         builder: (context, themeData, child) {
           return MaterialApp(
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-            home: LandingPage(),
+            home:(),
             routes: {
               BrandNavigationRailScreen.routeName: (ctx) =>
                   BrandNavigationRailScreen(key: ValueKey('myKey')),
@@ -70,6 +71,7 @@ class _MyAppState extends State<MyApp> {
               CartScreen.routeName: (ctx) => CartScreen(),
               WishlistScreen.routeName: (ctx) => WishlistScreen(),
               ProductDetails.routeName: (ctx) => ProductDetails(),
+              ForgetPassword.routeName: (ctx) => ForgetPassword(),
             },
           );
         },
