@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sneakerstore/consts/colors.dart';
@@ -12,16 +13,17 @@ class UserInfo extends StatefulWidget {
 }
 
 class _UserInfoState extends State<UserInfo> {
-
   late ScrollController _scrollController;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   var top = 0.0;
+
   @override
-void initState(){
+  void initState(){
     super.initState();
     _scrollController = ScrollController();
-    _scrollController.addListener(() {setState(() {
-      });
-        });
+    _scrollController.addListener(() {
+      setState(() {});
+    });
   }
   @override
   Widget build (BuildContext context){
@@ -65,7 +67,7 @@ void initState(){
                               child: Row(
                                 children: [
                                   const SizedBox(
-                                    width: 12,
+                                      width: 12
                                   ),
                                   Container(
                                    height: kToolbarHeight / 1.8,
@@ -80,8 +82,7 @@ void initState(){
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         fit: BoxFit.fill,
-                                        image: AssetImage(
-                                            'assets/profile.png'),
+                                        image: AssetImage('assets/profile.png'),
                                       ),
                                     ),
                                   ),
@@ -92,7 +93,9 @@ void initState(){
                                     // 'top.toString()',
                                     'Guest',
                                     style: TextStyle(
-                                        fontSize: 20.0, color: Colors.white),
+                                        fontSize: 20.0,
+                                        color: Colors.white
+                                    ),
                                   ),
                                 ],
                               ),
@@ -116,26 +119,28 @@ void initState(){
                   children: [
                     Padding(
                         padding: const EdgeInsets.only(left: 8.0),
-                        child: userTitle('User Bag')),
+                        child: userTitle('User Bag')
+                    ),
                     Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            splashColor: Theme.of(context).splashColor,
-            child: ListTile(
-              onTap: () => Navigator.of(context)
-                  .pushNamed(WishlistScreen.routeName),
-              title: Text('Wishlist'),
-              trailing: Icon(Icons.chevron_right_rounded),
-
-              leading: Icon(Icons.favorite,
-              color: Colors.red,),
-            ),
-          ),
-        ),
+                    Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        splashColor: Theme.of(context).splashColor,
+                        child: ListTile(
+                          onTap: () => Navigator.of(context)
+                              .pushNamed(WishlistScreen.routeName),
+                          title: Text('Wishlist'),
+                          trailing: Icon(Icons.chevron_right_rounded),
+                          leading: Icon(
+                            Icons.favorite,
+                            color: Colors.red
+                          ),
+                        ),
+                      ),
+                    ),
                     Material(
                       color: Colors.transparent,
                       child: InkWell(
@@ -144,9 +149,10 @@ void initState(){
                           onTap: () {},
                           title: Text('Cart'),
                           trailing: Icon(Icons.chevron_right_rounded),
-
-                          leading: Icon(Icons.shopping_cart,
-                            color: Colors.lightBlue,),
+                          leading: Icon(
+                              Icons.shopping_cart,
+                              color: Colors.lightBlue
+                          ),
                         ),
                       ),
                     ),
@@ -198,9 +204,10 @@ void initState(){
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.only(right: 6.0),
-                                      child: Image.network('https://unsplash.com/photos/G9i_plbfDgk',
-                                      height: 20,
-                                      width: 20,
+                                      child: Image.network(
+                                        'https://unsplash.com/photos/G9i_plbfDgk',
+                                        height: 20,
+                                        width: 20
                                       ),
                                     ),
                                     Padding(
@@ -209,34 +216,34 @@ void initState(){
                                     ),
                                   ],
                                 ),
-                                content: Text('Do you wanna sign out?'),
+                                content: Text(
+                                  'Do you really wanna leave?',
+                                  textAlign: TextAlign.center,
+                                ),
                                 actions: [
                                   TextButton(
                                     onPressed: () async {
                                       Navigator.pop(context);
                                     },
-                                    child: Text('Cancel')),
+                                    child: Text('No')
+                                  ),
                                   TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      'OK',
+                                      'Yes',
                                       style: TextStyle(color: Colors.red),
-                                    )
-                                  )
+                                    ),
+                                  ),
                                 ],
                               );
                             });
                           },
-                          title: Text('Log out'),
+                          title: Text('Sign out'),
                           leading: Icon(Icons.exit_to_app_rounded),
                         ),
                       ),
-                    )
-
-
-
-
-        ],
+                    ),
+                  ],
                 ),
               )
             ],
