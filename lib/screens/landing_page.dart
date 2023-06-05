@@ -124,14 +124,10 @@ class _LandingPageState extends State<LandingPage>
             width: double.infinity,
           ),
           Container(
-            child: Image.asset('assets/shop.png',
-            // placeholder: (context, url) => Image.network('https://unsplash.com/photos/_kY6w94o-f0',
-            // fit: BoxFit.contain),
-            //   errorWidget: (context, url, error) => Icon(Icons.error),
-            // fit: BoxFit.cover,
-            height: double.infinity,
-            width: double.infinity,
-            // alignment: FractionalOffset(_animation.value, 0),
+            child: Image.asset(
+              'assets/shop.png',
+              height: double.infinity,
+              width: double.infinity,
             ),
           ),
           Container(
@@ -264,35 +260,43 @@ class _LandingPageState extends State<LandingPage>
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                        width: 3,
+                        color: Colors.red
+                      ),
+                      backgroundColor: Colors.red.shade500,
+                      primary: Colors.white
+                    ),
                     onPressed: _googleSignIn,
-                    // shape: StadiumBorder(),
-                    // highlightBorderColor: Colors.red.shade200,
-                    // borderSide: BorderSide(
-                    //     width: 2,
-                    //     color: Colors.red
-                    // ),
-                    child: Text('Google +'),
+                    child: const Text('Google +'),
                   ),
                   OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                            width: 3,
+                            color: Colors.blue
+                        ),
+                        backgroundColor: Colors.blue.shade500,
+                        primary: Colors.white
+                    ),
                     onPressed: (){},
-                    // shape: StadiumBorder(),
-                    // highlightBorderColor: Colors.blue.shade200,
-                    // borderSide: BorderSide(
-                    //     width: 2,
-                    //     color: Colors.blue
-                    // ),
-                    child: Text('Facebook'),
+                    child: const Text('Facebook'),
                   ),
                   _isLoading
                       ? CircularProgressIndicator()
                       : OutlinedButton(
-                    onPressed: (){_loginAnonymosly();},
-                    // shape: StadiumBorder(),
-                    // highlightBorderColor: Colors.grey.shade200,
-                    // borderSide: BorderSide(
-                    //     width: 2,
-                    //     color: Colors.grey
-                    // ),
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(
+                            width: 3,
+                            color: Colors.black
+                        ),
+                        backgroundColor: Colors.black,
+                        primary: Colors.white
+                    ),
+                    onPressed: (){
+                      _loginAnonymosly();
+                      },
                     child: Text('Sign in as guest'),
                   ),
                 ],
