@@ -47,7 +47,7 @@ class _MyAppState extends State<MyApp> {
         future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return MaterialApp(
+          return const MaterialApp(
             home: Scaffold(
               body: Center(
                 child: CircularProgressIndicator(),
@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
             ),
           );
         } else if (snapshot.hasError) {
-          MaterialApp(
+          const MaterialApp(
             home: Scaffold(
               body: Center(
                 child: Text('Error occured'),

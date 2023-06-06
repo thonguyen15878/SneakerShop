@@ -216,7 +216,7 @@ class _UserInfoState extends State<UserInfo> {
                                           padding:
                                               const EdgeInsets.only(right: 6.0),
                                           child: Image.network(
-                                            'https://unsplash.com/photos/G9i_plbfDgk',
+                                            'https://cdn-icons-png.flaticon.com/512/196/196759.png?w=996&t=st=1685984446~exp=1685985046~hmac=a76e5e050f4526901f6d1b308ff9548cd5704c396f7781a0dac7e1ec6da06a78',
                                             height: 20,
                                             width: 20,
                                           ),
