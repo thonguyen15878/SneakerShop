@@ -2,6 +2,10 @@ import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:sneakerstore/inner_screen/product_details.dart';
+
+import '../models/product.dart';
+import '../providers/cart_provider.dart';
+import '../widget/feeds_dialog.dart';
 class MarketProducts extends StatefulWidget {
   @override
   _MarketProductsState createState() => _MarketProductsState();
@@ -10,6 +14,9 @@ class MarketProducts extends StatefulWidget {
 class _MarketProductsState extends State<MarketProducts> {
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
+    final productsAttributes = Provider.of<Product>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
@@ -32,7 +39,7 @@ class _MarketProductsState extends State<MarketProducts> {
                       constraints: BoxConstraints(
                           minHeight: 100,
                           maxHeight: MediaQuery.of(context).size.height * 0.3),
-                      child: Image.asset('assets/shoes.png', fit: BoxFit.fitWidth),
+                      child: Image.network(productsAttributes.imageUrl, fit: BoxFit.fitWidth),
                     ),
                   ),
                 ],
@@ -46,8 +53,8 @@ class _MarketProductsState extends State<MarketProducts> {
                     const SizedBox(
                       height: 4,
                     ),
-                    const Text(
-                      'Description',
+                     Text(
+                      productsAttributes.description,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: TextStyle(
@@ -55,10 +62,10 @@ class _MarketProductsState extends State<MarketProducts> {
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
-                    const Padding(
+                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 8.0),
                       child: Text(
-                        '\$ 158.99',
+                        '\$ ${productsAttributes.price}',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(
@@ -70,7 +77,8 @@ class _MarketProductsState extends State<MarketProducts> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Quantity: 12',
+                         Text(
+                          '${productsAttributes.quantity}',
 
                           style: TextStyle(
                               fontSize: 12,
@@ -81,7 +89,14 @@ class _MarketProductsState extends State<MarketProducts> {
                         Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: (){},
+                            onTap: () async {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => FeedDialog(
+                                  productId: productsAttributes.id,
+                                ),
+                              );
+                            },
                             borderRadius: BorderRadius.circular(18.0),
                             child: const Icon(
                               Icons.more_horiz,

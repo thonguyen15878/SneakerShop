@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 
 import 'package:icon/icon.dart';
 
-import 'package:sneakerstore/screens/cart.dart';
-import 'package:sneakerstore/screens/search.dart';
+import 'package:sneakerstore/cart/cart.dart';
+import 'package:sneakerstore/screens/upload_product_form.dart';
+import 'package:sneakerstore/search/search.dart';
 import 'package:sneakerstore/screens/sell.dart';
 import 'package:sneakerstore/screens/home.dart';
 import 'package:sneakerstore/screens/user_info.dart';
 
-import 'package:sneakerstore/screens/market.dart';
+import 'package:sneakerstore/market/market.dart';
 
 class BottomBarScreen extends StatefulWidget {
   static const routeName = '/BottomBarScreen';
@@ -34,7 +35,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         'page': Market(),
       },
       {
-        'page': Search(),
+        'page': UploadProductForm(),
       },
       {
         'page': CartScreen(),
@@ -91,7 +92,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                 BottomNavigationBarItem(
                   activeIcon: null,
                   icon: Icon(null),
-                  label: 'Search',
+                  label: 'SellProduct',
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(

@@ -11,16 +11,25 @@ import 'package:sneakerstore/screens/auth/login.dart';
 import 'package:sneakerstore/screens/auth/register.dart';
 import 'package:sneakerstore/screens/bottom_bar.dart';
 import 'package:sneakerstore/screens/landing_page.dart';
-import 'package:sneakerstore/screens/cart.dart';
+import 'package:sneakerstore/cart/cart.dart';
 import 'package:sneakerstore/screens/main_screen.dart';
+import 'package:sneakerstore/market/market.dart';
+import 'package:sneakerstore/screens/upload_product_form.dart';
 import 'package:sneakerstore/screens/user_state.dart';
 import 'package:sneakerstore/screens/wishlist.dart';
 import 'inner_screen/brands_navigation_rail.dart';
+import 'inner_screen/categories_feeds.dart';
 import 'inner_screen/product_details.dart';
 import 'loader.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(MyApp());
+import 'orders/order.dart';
+
+
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget{
   @override
@@ -96,6 +105,11 @@ class _MyAppState extends State<MyApp> {
                   ProductDetails.routeName: (ctx) => ProductDetails(),
                   ForgetPassword.routeName: (ctx) => ForgetPassword(),
                   BottomBarScreen.routeName: (ctx) => BottomBarScreen(),
+                  Market.routeName: (ctx) => Market(),
+                  UploadProductForm.routeName: (ctx) => UploadProductForm(),
+                  CategoriesFeedsScreen.routeName: (ctx) =>
+                      CategoriesFeedsScreen(),
+                  OrderScreen.routeName: (ctx) => OrderScreen(),
                 },
               );
             },

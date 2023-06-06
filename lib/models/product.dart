@@ -11,7 +11,17 @@ class Product with ChangeNotifier{
   final int quantity;
   final bool isFavorite;
 
+  Product({
+    this.id = '',
+    this.title = '',
+    this.description = '',
+    this.price = 0.0,
+    this.imageUrl = '',
+    this.productCategoryName = '',
+    this.brand = '',
+    this.quantity = 0,
+    this.isFavorite = false,
+  });
 
 
-  Product({required this.id, required this.title, required this.description, required this.price, required this.imageUrl, required this.productCategoryName, required this.brand, required this.quantity, required this.isFavorite});
 }

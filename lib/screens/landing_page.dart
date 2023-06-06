@@ -90,7 +90,7 @@ class _LandingPageState extends State<LandingPage>
             'createdAt': Timestamp.now(),
           });
         } catch (error) {
-          // _globalMethods.authErrorHandle(error.message, context);
+          _globalMethods.authErrorHandle(error.toString(), context);
         }
       }
     }
@@ -103,10 +103,10 @@ class _LandingPageState extends State<LandingPage>
     try {
       await _auth.signInAnonymously();
     }
-    // catch (error) {
-    //   _globalMethods.authErrorHandle(error.message, context);
-    //   print('error occured ${error.message}');
-    // }
+    catch (error) {
+      _globalMethods.authErrorHandle(error.toString(), context);
+      print('error occured ${error.toString()}');
+    }
     finally {
       setState(() {
         _isLoading = false;
@@ -135,7 +135,7 @@ class _LandingPageState extends State<LandingPage>
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: const [
                 Text(
                   'WELCOME',
                   style: TextStyle(
@@ -176,7 +176,7 @@ class _LandingPageState extends State<LandingPage>
                         onPressed: () {Navigator.pushNamed(context, LoginScreen.routeName);},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                          children: const [
                             Text(
                               'Log in',
                               style: TextStyle(
@@ -193,7 +193,7 @@ class _LandingPageState extends State<LandingPage>
                         ),
                       ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   Expanded(
                     child: ElevatedButton(
                       style: ButtonStyle(
@@ -208,7 +208,7 @@ class _LandingPageState extends State<LandingPage>
                       onPressed: () {Navigator.pushNamed(context, RegisterScreen.routeName);},
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                        children: const [
                           Text(
                             'Sign up',
                             style: TextStyle(
@@ -230,10 +230,10 @@ class _LandingPageState extends State<LandingPage>
               ),
               SizedBox(height: 30),
               Row(
-                children: [
+                children: const [
                   Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Divider(
                           color: Colors.black,
                           thickness: 2,
@@ -246,7 +246,7 @@ class _LandingPageState extends State<LandingPage>
                   ),
                   Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Divider(
                           color: Colors.black,
                           thickness: 2
@@ -261,47 +261,47 @@ class _LandingPageState extends State<LandingPage>
                 children: [
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(
+                      side: const BorderSide(
                         width: 3,
                         color: Colors.red
                       ),
                       backgroundColor: Colors.red.shade500,
-                      primary: Colors.white
+                        foregroundColor: Colors.white
                     ),
                     onPressed: _googleSignIn,
                     child: const Text('Google +'),
                   ),
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                        side: BorderSide(
+                        side: const BorderSide(
                             width: 3,
                             color: Colors.blue
                         ),
                         backgroundColor: Colors.blue.shade500,
-                        primary: Colors.white
+                        foregroundColor: Colors.white
                     ),
                     onPressed: (){},
                     child: const Text('Facebook'),
                   ),
                   _isLoading
-                      ? CircularProgressIndicator()
+                      ? const CircularProgressIndicator()
                       : OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                        side: BorderSide(
+                        side: const BorderSide(
                             width: 3,
                             color: Colors.black
                         ),
                         backgroundColor: Colors.black,
-                        primary: Colors.white
+                        foregroundColor: Colors.white
                     ),
                     onPressed: (){
                       _loginAnonymosly();
                       },
-                    child: Text('Sign in as guest'),
+                    child: const Text('Sign in as guest'),
                   ),
                 ],
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
             ],
           )
         ],

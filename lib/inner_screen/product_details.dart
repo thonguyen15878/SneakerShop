@@ -3,11 +3,14 @@ import 'dart:ui';
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sneakerstore/widget/market_product.dart';
+import 'package:sneakerstore/market/market_product.dart';
 
 import '../consts/colors.dart';
+import '../providers/cart_provider.dart';
 import '../providers/dark_theme_provider.dart';
-import '../screens/cart.dart';
+import '../cart/cart.dart';
+import '../providers/favs_provider.dart';
+import '../providers/products.dart';
 import '../screens/wishlist.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -23,6 +26,15 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
+    final productsData = Provider.of<Products>(context, listen: false);
+    final productId = ModalRoute.of(context)?.settings.arguments as String;
+    final cartProvider = Provider.of<CartProvider>(context);
+
+    final favsProvider = Provider.of<FavsProvider>(context);
+    print('productId $productId');
+    final prodAttr = productsData.findById(productId);
+
+    final productsList = productsData.products;
 
 
     return Scaffold(
@@ -32,8 +44,8 @@ class _ProductDetailsState extends State<ProductDetails> {
             foregroundDecoration: BoxDecoration(color: Colors.black12),
             height: MediaQuery.of(context).size.height * 0.45,
             width: double.infinity,
-            child: Image.asset(
-              'assets/shoes2.png',
+            child: Image.network(
+              prodAttr.imageUrl,
             ),
           ),
           SingleChildScrollView(
@@ -96,7 +108,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             Container(
                               width: MediaQuery.of(context).size.width * 0.9,
                               child: Text(
-                                'title',
+                                prodAttr.title,
                                 maxLines: 2,
                                 style: TextStyle(
                                   // color: Theme.of(context).textSelectionColor,
@@ -109,7 +121,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               height: 8,
                             ),
                             Text(
-                              '100 \$ ',
+                              'US \$ ${prodAttr.price}',
                               style: TextStyle(
                                   color: themeState.darkTheme
                                       ? Theme.of(context).disabledColor
@@ -134,7 +146,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
-                          'this is a shoes this is a shoes this is a shoes this is a shoes',
+                          prodAttr.description,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 21.0,
@@ -153,11 +165,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                           height: 1,
                         ),
                       ),
-                      _details(themeState.darkTheme, 'Brand: ', 'nike'),
+                      _details(themeState.darkTheme, 'Brand: ', prodAttr.brand),
                       _details(themeState.darkTheme, 'Quantity: ',
-                          '500'),
+                          '${prodAttr.quantity}'),
                       _details(themeState.darkTheme, 'Category: ',
-                          'nike air force'),
+                          prodAttr.productCategoryName),
+
 
                       SizedBox(
                         height: 15,

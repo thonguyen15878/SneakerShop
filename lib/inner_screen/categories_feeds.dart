@@ -1,6 +1,6 @@
 import 'package:sneakerstore/models/product.dart';
 import 'package:sneakerstore/providers//products.dart';
-import 'package:sneakerstore/widget/market_product.dart';
+import 'package:sneakerstore/market/market_product.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';

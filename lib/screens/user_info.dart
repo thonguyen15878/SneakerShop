@@ -16,12 +16,13 @@ class _UserInfoState extends State<UserInfo> {
   late ScrollController _scrollController;
   var top = 0.0;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  late String _uid;
-  late String _name;
-  late String _email;
-  late String _joinedAt;
-  late String _userImageUrl;
-  late int _phoneNumber;
+   String _uid = '';
+  String _name = '';
+  String _email = '';
+  String _joinedAt = '';
+   String _userImageUrl= '';
+  int _phoneNumber = 0;
+
   @override
   void initState() {
     super.initState();
@@ -31,11 +32,28 @@ class _UserInfoState extends State<UserInfo> {
     });
     getData();
   }
+
   void getData() async {
     User? user = _auth.currentUser;
     _uid = user!.uid;
 
-    // print("name $_name");
+    print('user.displayName ${user.displayName}');
+    print('user.photoURL ${user.photoURL}');
+    final DocumentSnapshot<Map<String, dynamic>>? userDoc = user.isAnonymous
+        ? null
+        : await FirebaseFirestore.instance.collection('users').doc(_uid).get();
+    if (userDoc == null) {
+      return;
+    } else {
+      setState(() {
+        _name = userDoc.get('name');
+        _email = user.email!;
+        _joinedAt = userDoc.get('joinedAt');
+        _phoneNumber = userDoc.get('phoneNumber');
+        _userImageUrl = userDoc.get('imageUrl');
+      });
+    }
+    print('_name $_name');
   }
 
   @override
@@ -58,14 +76,15 @@ class _UserInfoState extends State<UserInfo> {
                   return Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                          colors: [
-                            ColorsConsts.starterColor,
-                            ColorsConsts.endColor,
-                          ],
-                          begin: const FractionalOffset(0.0, 0.0),
-                          end: const FractionalOffset(1.0, 0.0),
-                          stops: [0.0, 1.0],
-                          tileMode: TileMode.clamp),
+                        colors: [
+                          ColorsConsts.starterColor,
+                          ColorsConsts.endColor,
+                        ],
+                        begin: const FractionalOffset(0.0, 0.0),
+                        end: const FractionalOffset(1.0, 0.0),
+                        stops: [0.0, 1.0],
+                        tileMode: TileMode.clamp,
+                      ),
                     ),
                     child: FlexibleSpaceBar(
                       collapseMode: CollapseMode.parallax,
@@ -84,7 +103,7 @@ class _UserInfoState extends State<UserInfo> {
                                 Container(
                                   height: kToolbarHeight / 1.8,
                                   width: kToolbarHeight / 1.8,
-                                  decoration: const BoxDecoration(
+                                  decoration:  BoxDecoration(
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.white,
@@ -94,27 +113,30 @@ class _UserInfoState extends State<UserInfo> {
                                     shape: BoxShape.circle,
                                     image: DecorationImage(
                                       fit: BoxFit.fill,
-                                      image: AssetImage('assets/profile.png'),
+                                      image: NetworkImage(
+                                          'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
                                     ),
                                   ),
                                 ),
                                 const SizedBox(
                                   width: 12,
                                 ),
-                                const Text(
-                                  // 'top.toString()',
-                                  'Guest',
+                                Text(
+                                  _name == null ? 'Guest' : _name,
                                   style: TextStyle(
-                                      fontSize: 20.0, color: Colors.white),
+                                    fontSize: 20.0,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ],
                       ),
-                      background: const Image(
-                        image: NetworkImage(
-                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz86LYlrR9TkR_BTQeKrEX5tUG5rSICCaR4g&usqp=CAU'),
+                      background:  Image(
+                        image: NetworkImage(_userImageUrl ??
+                            'https://t3.ftcdn.net/jpg/01/83/55/76/240_F_183557656_DRcvOesmfDl5BIyhPKrcWANFKy2964i9.jpg'),
+
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -127,8 +149,9 @@ class _UserInfoState extends State<UserInfo> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: userTitle('User Bag')),
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: userTitle('User Bag'),
+                    ),
                     Divider(
                       thickness: 1,
                       color: Colors.grey,
@@ -138,8 +161,7 @@ class _UserInfoState extends State<UserInfo> {
                       child: InkWell(
                         splashColor: Theme.of(context).splashColor,
                         child: ListTile(
-                          onTap: () => Navigator.of(context)
-                              .pushNamed(WishlistScreen.routeName),
+                          onTap: () => Navigator.of(context).pushNamed(WishlistScreen.routeName),
                           title: Text('Wishlist'),
                           trailing: Icon(Icons.chevron_right_rounded),
                           leading: Icon(
@@ -165,25 +187,23 @@ class _UserInfoState extends State<UserInfo> {
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: userTitle('User Information')),
-                    Divider(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: userTitle('User Information'),
+                    ),
+                    const Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
-                    userListTile('Full name', 'Anhhh Duyyy', 0, context),
-                    userListTile('Address', 'somewhere on earth', 0, context),
-                    userListTile('Date of birth', '9/9/2999', 0, context),
-                    userListTile('Email', 'daylaAnhDuy@gmail.com', 0, context),
-                    userListTile('Instagram', 'daylaemDuy', 0, context),
-                    userListTile('Phone Number', '9999', 0, context),
-                    userListTile('Shipping address', '', 0, context),
-                    userListTile('joined date', 'date', 0, context),
+                    userListTile('Email', _email ?? '', 0, context),
+                    userListTile('Phone number', _phoneNumber.toString() ?? '',
+                        1, context),
+                    userListTile('Shipping address', '', 2, context),
+                    userListTile('joined date', _joinedAt ?? '', 3, context),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
-                      child: userTitle('user settings'),
+                      child: userTitle('User Settings'),
                     ),
-                    Divider(
+                    const Divider(
                       thickness: 1,
                       color: Colors.grey,
                     ),
@@ -198,7 +218,7 @@ class _UserInfoState extends State<UserInfo> {
                       visualDensity: VisualDensity.comfortable,
                       switchType: SwitchType.cupertino,
                       switchActiveColor: Colors.indigo,
-                      title: Text('Dark theme'),
+                      title: Text('Dark Theme'),
                     ),
                     Material(
                       color: Colors.transparent,
@@ -207,55 +227,55 @@ class _UserInfoState extends State<UserInfo> {
                         child: ListTile(
                           onTap: () async {
                             showDialog(
-                                context: context,
-                                builder: (BuildContext ctx) {
-                                  return AlertDialog(
-                                    title: Row(
-                                      children: [
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 6.0),
-                                          child: Image.network(
-                                            'https://cdn-icons-png.flaticon.com/512/196/196759.png?w=996&t=st=1685984446~exp=1685985046~hmac=a76e5e050f4526901f6d1b308ff9548cd5704c396f7781a0dac7e1ec6da06a78',
-                                            height: 20,
-                                            width: 20,
-                                          ),
+                              context: context,
+                              builder: (BuildContext ctx) {
+                                return AlertDialog(
+                                  title: Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(right: 6.0),
+                                        child: Image.network(
+                                          'https://cdn-icons-png.flaticon.com/512/196/196759.png?w=996&t=st=1685984446~exp=1685985046~hmac=a76e5e050f4526901f6d1b308ff9548cd5704c396f7781a0dac7e1ec6da06a78',
+                                          height: 20,
+                                          width: 20,
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text('Sign out'),
-                                        ),
-                                      ],
-                                    ),
-                                    content: Text('Do you wanna sign out?'),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () async {
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('Cancel')),
-                                      TextButton(
-                                          onPressed: ()  async {
-                                            await _auth.signOut().then(
-                                                    (value) =>
-                                                    Navigator.pop(context));
-                                          },
-                                          child: Text(
-                                            'OK',
-                                            style: TextStyle(color: Colors.red),
-                                          ))
+                                      ),
+                                      const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text('Sign out'),
+                                      ),
                                     ],
-                                  );
-                                });
+                                  ),
+                                  content: Text('Do you want to sign out?'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () async {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        await _auth.signOut().then((value) => Navigator.pop(context));
+                                      },
+                                      child: Text(
+                                        'OK',
+                                        style: TextStyle(color: Colors.red),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
                           title: Text('Log out'),
                           leading: Icon(Icons.exit_to_app_rounded),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
             ],
           ),
           _buildFab(),
@@ -266,26 +286,24 @@ class _UserInfoState extends State<UserInfo> {
 
   Widget _buildFab() {
     final double defaultTopMargin = 200.0 - 4.0;
-
     final double scaleStart = 160.0;
-
     final double scaleEnd = scaleStart / 2;
 
     double top = defaultTopMargin;
     double scale = 1.0;
+
     if (_scrollController.hasClients) {
       double offset = _scrollController.offset;
       top -= offset;
-      if (offset < defaultTopMargin - scaleStart) {
-        //offset small => don't scale down
 
+      if (offset < defaultTopMargin - scaleStart) {
+        // Offset small => don't scale down
         scale = 1.0;
       } else if (offset < defaultTopMargin - scaleEnd) {
-        //offset between scaleStart and scaleEnd => scale down
-
+        // Offset between scaleStart and scaleEnd => scale down
         scale = (defaultTopMargin - scaleEnd - offset) / scaleEnd;
       } else {
-        //offset passed scaleEnd => hide fab
+        // Offset passed scaleEnd => hide fab
         scale = 0.0;
       }
     }
@@ -306,27 +324,19 @@ class _UserInfoState extends State<UserInfo> {
     );
   }
 
-  List<IconData> _userTileIcons = [
-    Icons.face,
+  final List<IconData> _userTileIcons = [
+    Icons.email,
     Icons.phone,
-    Icons.local_shipping,
+    Icons.calendar_today,
     Icons.watch_later,
-    Icons.exit_to_app_rounded
+    Icons.exit_to_app_rounded,
   ];
 
-  Widget userListTile(
-      String title, String subTitle, int index, BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        splashColor: Theme.of(context).splashColor,
-        child: ListTile(
-          onTap: () {},
-          title: Text(title),
-          subtitle: Text(subTitle),
-          leading: Icon(_userTileIcons[index]),
-        ),
-      ),
+  Widget userListTile(String title, String subTitle, int index, BuildContext context) {
+    return ListTile(
+      title: Text(title),
+      subtitle: Text(subTitle),
+      leading: Icon(_userTileIcons[index]),
     );
   }
 
