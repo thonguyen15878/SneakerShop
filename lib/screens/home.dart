@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../inner_screen/brands_navigation_rail.dart';
 import '../providers/products.dart';
+import '../widget/backlayer.dart';
 import '../widget/category.dart';
 
 class Home extends StatelessWidget {
@@ -45,9 +46,7 @@ class Home extends StatelessWidget {
             )
           ],
         ),
-        backLayer: Center(
-          child: Text("Back Layer"),
-        ),
+        backLayer: BackLayerMenu(),
         frontLayer: Column(
           children: [
             Image.asset(

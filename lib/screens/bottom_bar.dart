@@ -86,7 +86,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
                   label: 'Home',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.rss_feed),
+                  icon: Icon(Icons.search),
                   label: 'Market',
                 ),
                 BottomNavigationBarItem(
@@ -118,7 +118,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           splashColor: Colors.grey,
           tooltip: 'Search',
           elevation: 4,
-          child: Icon(Icons.search),
+          child: Icon(Icons.assignment_turned_in),
           onPressed: () => setState(() {
             _selectedPageIndex = 2;
           }),

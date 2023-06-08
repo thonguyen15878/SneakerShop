@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sneakerstore/cart/cart.dart';
 import 'package:sneakerstore/consts/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -176,7 +177,7 @@ class _UserInfoState extends State<UserInfo> {
                       child: InkWell(
                         splashColor: Theme.of(context).splashColor,
                         child: ListTile(
-                          onTap: () {},
+                          onTap: () => Navigator.of(context).pushNamed(CartScreen.routeName),
                           title: Text('Cart'),
                           trailing: Icon(Icons.chevron_right_rounded),
                           leading: Icon(
