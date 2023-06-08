@@ -32,7 +32,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
         'page': Home(),
       },
       {
-        'page': Market(),
+        'page': Search(),
       },
       {
         'page': UploadProductForm(),

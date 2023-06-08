@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:badges/badges.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sneakerstore/market/market_product.dart';
@@ -11,10 +11,12 @@ import '../providers/dark_theme_provider.dart';
 import '../cart/cart.dart';
 import '../providers/favs_provider.dart';
 import '../providers/products.dart';
-import '../screens/wishlist.dart';
+import '../screens/wishlist/wishlist.dart';
 
 class ProductDetails extends StatefulWidget {
   static const routeName = '/ProductDetails';
+
+
 
   @override
   _ProductDetailsState createState() => _ProductDetailsState();
@@ -27,15 +29,14 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
     final productsData = Provider.of<Products>(context, listen: false);
-    final productId = ModalRoute.of(context)?.settings.arguments as String;
+    final productId = ModalRoute.of(context)?.settings.arguments as String?;
     final cartProvider = Provider.of<CartProvider>(context);
 
     final favsProvider = Provider.of<FavsProvider>(context);
     print('productId $productId');
-    final prodAttr = productsData.findById(productId);
+    final prodAttr = productsData.findById(productId!);
 
     final productsList = productsData.products;
-
 
     return Scaffold(
       body: Stack(
@@ -46,6 +47,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             width: double.infinity,
             child: Image.network(
               prodAttr.imageUrl,
+              fit: BoxFit.fitWidth,
             ),
           ),
           SingleChildScrollView(
@@ -146,7 +148,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
-                          prodAttr.description,
+                          prodAttr.description ,
                           style: TextStyle(
                             fontWeight: FontWeight.w400,
                             fontSize: 21.0,
@@ -165,12 +167,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                           height: 1,
                         ),
                       ),
-                      _details(themeState.darkTheme, 'Brand: ', prodAttr.brand),
+                      _details(themeState.darkTheme, 'Brand: ',
+                          prodAttr.brand ),
                       _details(themeState.darkTheme, 'Quantity: ',
                           '${prodAttr.quantity}'),
                       _details(themeState.darkTheme, 'Category: ',
-                          prodAttr.productCategoryName),
-
+                          prodAttr.productCategoryName ),
 
                       SizedBox(
                         height: 15,
@@ -194,7 +196,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                               child: Text(
                                 'No reviews yet',
                                 style: TextStyle(
-                                    color: Theme.of(context).textSelectionTheme.selectionColor,
+                                    color: Theme.of(context)
+                                        .textSelectionTheme
+                                        .selectionColor,
                                     fontWeight: FontWeight.w600,
                                     fontSize: 21.0),
                               ),
@@ -241,11 +245,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                   width: double.infinity,
                   height: 340,
                   child: ListView.builder(
-                    itemCount:7 ,
+                    itemCount:
+                        productsList.length < 7 ? productsList.length : 7,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext ctx, int index) {
-                      return MarketProducts();
-
+                      return ChangeNotifierProvider.value(
+                          value: productsList[index], child: MarketProducts());
                     },
                   ),
                 ),
@@ -263,32 +268,27 @@ class _ProductDetailsState extends State<ProductDetails> {
                 title: Text(
                   "DETAIL",
                   style:
-                  TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+                      TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
                 ),
                 actions: <Widget>[
-
-                       IconButton(
-                        icon: Icon(
-                          Icons.favorite,
-                          color: ColorsConsts.favColor,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed(WishlistScreen.routeName);
-                        },
-                      ),
-
-
-                       IconButton(
-                        icon: Icon(
-                          Icons.shopping_cart,
-                          color: ColorsConsts.cartColor,
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(CartScreen.routeName);
-                        },
-                      ),
-
+                  IconButton(
+                    icon: Icon(
+                      Icons.favorite,
+                      color: ColorsConsts.favColor,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(WishlistScreen.routeName);
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.shopping_cart,
+                      color: ColorsConsts.cartColor,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(CartScreen.routeName);
+                    },
+                  ),
                 ]),
           ),
           Align(
@@ -302,17 +302,29 @@ class _ProductDetailsState extends State<ProductDetails> {
                       style: ElevatedButton.styleFrom(
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         shape: RoundedRectangleBorder(side: BorderSide.none),
-                        primary: Colors.redAccent.shade400,
+                        backgroundColor: Colors.redAccent.shade400,
                       ),
-                      onPressed: () {},
+                      onPressed:
+                          cartProvider.getCartItems.containsKey(productId)
+                              ? () {}
+                              : () {
+                                  if (prodAttr != null) {
+                                    cartProvider.addProductToCart(
+                                        productId!,
+                                        prodAttr!.price,
+                                        prodAttr.title,
+                                        prodAttr.imageUrl);
+                                  }
+                                },
                       child: Text(
-                        'Add to Cart'.toUpperCase(),
+                        cartProvider.getCartItems.containsKey(productId)
+                            ? 'In cart'
+                            : 'Add to Cart'.toUpperCase(),
                         style: TextStyle(fontSize: 16, color: Colors.white),
                       ),
                     ),
                   ),
                 ),
-
                 Expanded(
                   flex: 2,
                   child: Container(
@@ -321,7 +333,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                       style: ElevatedButton.styleFrom(
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         shape: RoundedRectangleBorder(side: BorderSide.none),
-                        backgroundColor: Theme.of(context).colorScheme.background,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
                       ),
                       onPressed: () {},
                       child: Row(
@@ -330,7 +343,9 @@ class _ProductDetailsState extends State<ProductDetails> {
                             'Buy now'.toUpperCase(),
                             style: TextStyle(
                               fontSize: 14,
-                              color: Theme.of(context).textSelectionTheme.selectionColor,
+                              color: Theme.of(context)
+                                  .textSelectionTheme
+                                  .selectionColor,
                             ),
                           ),
                           SizedBox(
@@ -346,7 +361,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                 ),
-
                 Expanded(
                   flex: 1,
                   child: Container(
@@ -356,14 +370,21 @@ class _ProductDetailsState extends State<ProductDetails> {
                     height: 50,
                     child: InkWell(
                       splashColor: ColorsConsts.favColor,
-                      onTap: () {},
+                      onTap: () {
+    if (prodAttr != null) {
+    favsProvider.addAndRemoveFromFav(productId!,
+    prodAttr!.price, prodAttr.title, prodAttr.imageUrl);
+    }
+    },
                       child: Center(
                         child: Icon(
-                         Icons.favorite
-                              ,
+                          favsProvider.getFavsItems.containsKey(productId)
+                              ? Icons.favorite
+                              : Icons.favorite,
                           color:
-
-                              ColorsConsts.white,
+                              favsProvider.getFavsItems.containsKey(productId)
+                                  ? Colors.red
+                                  : ColorsConsts.white,
                         ),
                       ),
                     ),

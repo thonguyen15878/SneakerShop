@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
-import 'package:sneakerstore/screens/wishlist.dart';
+import 'package:sneakerstore/screens/wishlist/wishlist.dart';
 
 class UserInfo extends StatefulWidget {
   @override

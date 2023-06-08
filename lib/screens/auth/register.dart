@@ -103,7 +103,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (pickedImage == null) {
       return; // User canceled image picking
     }
-    final pickedImageFile = File(pickedImage!.path);
+    final pickedImageFile = File(pickedImage.path);
     setState(() {
       _pickedImage = pickedImageFile;
     });
@@ -116,7 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (pickedImage == null) {
       return; // User canceled image picking
     }
-    final pickedImageFile = File(pickedImage!.path);
+    final pickedImageFile = File(pickedImage.path);
     setState(() {
       _pickedImage = pickedImageFile;
     });

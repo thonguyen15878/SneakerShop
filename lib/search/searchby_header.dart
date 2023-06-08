@@ -8,7 +8,7 @@ import '../consts/colors.dart';
 import '../providers/cart_provider.dart';
 import '../providers/favs_provider.dart';
 import '../screens/user_info.dart';
-import '../screens/wishlist.dart';
+import '../screens/wishlist/wishlist.dart';
 
 class SearchByHeader extends SliverPersistentHeaderDelegate {
   final double flexibleSpace;

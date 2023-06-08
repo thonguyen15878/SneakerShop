@@ -21,23 +21,37 @@ class Products with ChangeNotifier {
         _products.insert(
           0,
           Product(
-              id: element.get('productId') as String,
-              title: element.get('productTitle') as String,
-              description: element.get('productDescription') as String,
+              id: element.get('productId') ,
+              title: element.get('productTitle') ,
+              description: element.get('productDescription') ,
               price: double.parse(
-                element.get('price')  as String,
+                element.get('price'),
               ) ,
-              imageUrl: element.get('productImage') as String,
-              brand: element.get('productBrand') as String,
-              productCategoryName: element.get('productCategory') as String,
+              imageUrl: element.get('productImage') ,
+              brand: element.get('productBrand') ,
+              productCategoryName: element.get('productCategory') ,
               quantity: int.parse(
-                element.get('quantity') as String,
+                element.get('productQuantity') ,
               ),
-              isFavorite: true),
+              isPopular: true
+            //   id: element.data().toString().contains('productId') ? element.get('productId') : '',
+            // title: element.data().toString().contains('productTitle') ? element.get('productTitle') : '',
+            // description: element.data().toString().contains('productDescription') ? element.get('productDescription') : '',
+            // price: element.data().toString().contains('price') ? element.get('id') : 0.0,
+            // imageUrl: element.data().toString().contains('productImage') ? element.get('productImage') : '',
+            // brand: element.data().toString().contains('productBrand') ? element.get('productBrand') : '',
+            // productCategoryName: element.data().toString().contains('productCategory') ? element.get('productCategory') : '',
+            // quantity: element.data().toString().contains('productQuantity') ? element.get('productQuantity') : 0,
+
+              ),
         );
       });
-      notifyListeners();
+
     });
+  }
+
+  List<Product> get popularProducts {
+    return _products.where((element) => element.isPopular).toList();
   }
 
 
@@ -64,11 +78,11 @@ class Products with ChangeNotifier {
   }
 
   List<Product> searchQuery(String searchText) {
-    List<Product> _searchList = _products
+    List<Product> searchList = _products
         .where((element) =>
         element.title.toLowerCase().contains(searchText.toLowerCase()))
         .toList();
-    return _searchList;
+    return searchList;
   }
 
 

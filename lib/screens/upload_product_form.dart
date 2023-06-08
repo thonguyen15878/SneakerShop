@@ -61,11 +61,12 @@ class _UploadProductFormState extends State<UploadProductForm> {
   }
 
   void _trySubmit() async {
-    final isValid = _formKey.currentState!.validate();
+
     FocusScope.of(context).unfocus();
+    final isValid = _formKey.currentState?.validate() ?? false;
 
     if (isValid) {
-      _formKey.currentState!.save();
+      _formKey.currentState?.save();
       print(_productTitle);
       print(_productPrice);
       print(_productCategory);
@@ -266,13 +267,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                 ],
                                 decoration: InputDecoration(
                                   labelText: 'Price \$',
-                                  //  prefixIcon: Icon(Icons.mail),
-                                  // suffixIcon: Text(
-                                  //   '\n \n \$',
-                                  //   textAlign: TextAlign.start,
-                                  // ),
                                 ),
-                                //obscureText: true,
                                 onSaved: (value) {
                                   _productPrice = value!;
                                 },
@@ -314,7 +309,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                     Theme.of(context).colorScheme.background,
                                   ),
                                   child: Image.file(
-                                    this._pickedImage!,
+                                    _pickedImage!,
                                     fit: BoxFit.contain,
                                     alignment: Alignment.center,
                                   ),
@@ -424,23 +419,12 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                   child: Text('sneaker for sport'),
                                   value: 'sneaker for sport',
                                 ),
-                                // DropdownMenuItem<String>(
-                                //   child: Text('Shoes'),
-                                //   value: 'Shoes',
-                                // ),
-                                // DropdownMenuItem<String>(
-                                //   child: Text('Funiture'),
-                                //   value: 'Funiture',
-                                // ),
-                                // DropdownMenuItem<String>(
-                                //   child: Text('Watches'),
-                                //   value: 'Watches',
-                                // ),
+
                               ],
                               onChanged: (String? value) {
                                 setState(() {
                                   _categoryValue = value;
-                                  _categoryController.text = value!;
+                                  _categoryController.text = value ?? '';
                                   //_controller.text= _productCategory;
                                   print(_productCategory);
                                 });
@@ -518,7 +502,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
                               onChanged: (String? value) {
                                 setState(() {
                                   _brandValue = value;
-                                  _brandController.text = value!;
+                                  _brandController.text = value ?? '';
                                   print(_productBrand);
                                 });
                               },

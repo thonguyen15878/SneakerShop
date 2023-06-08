@@ -16,7 +16,7 @@ import 'package:sneakerstore/screens/main_screen.dart';
 import 'package:sneakerstore/market/market.dart';
 import 'package:sneakerstore/screens/upload_product_form.dart';
 import 'package:sneakerstore/screens/user_state.dart';
-import 'package:sneakerstore/screens/wishlist.dart';
+import 'package:sneakerstore/screens/wishlist/wishlist.dart';
 import 'inner_screen/brands_navigation_rail.dart';
 import 'inner_screen/categories_feeds.dart';
 import 'inner_screen/product_details.dart';

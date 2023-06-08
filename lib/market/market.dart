@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sneakerstore/screens/wishlist.dart';
+import 'package:sneakerstore/screens/wishlist/wishlist.dart';
 import 'package:sneakerstore/market/market_product.dart';
 
 import '../cart/cart.dart';
@@ -9,6 +9,8 @@ import '../consts/colors.dart';
 import '../models/product.dart';
 import '../providers/cart_provider.dart';
 import '../providers/favs_provider.dart';
+import '../providers/products.dart';
+import '../providers/products.dart';
 import '../providers/products.dart';
 
 class Market extends StatefulWidget {
@@ -19,10 +21,10 @@ class Market extends StatefulWidget {
 }
 
 class _MarketState extends State<Market> {
-  void initState() {
-    super.initState();
-    Provider.of<Products>(context, listen: false).fetchProducts();
-  }
+  // void initState() {
+  //   super.initState();
+  //   Provider.of<Products>(context, listen: false).fetchProducts();
+  // }
 
   Future<void> _getProductsOnRefresh() async {
     await Provider.of<Products>(context, listen: false).fetchProducts();
@@ -31,11 +33,16 @@ class _MarketState extends State<Market> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments;
+    final popular = arguments is String ? arguments : 'default';
     final productsProvider = Provider.of<Products>(
       context,
     );
 
     List<Product> productsList = productsProvider.products;
+    if (popular == 'popular') {
+      productsList = productsProvider.popularProducts;
+    }
 
     return Scaffold(
       appBar: AppBar(
