@@ -1,5 +1,5 @@
 import 'package:sneakerstore/models/product.dart';
-import 'package:sneakerstore/providers//products.dart';
+import 'package:sneakerstore/providers/products.dart';
 import 'package:sneakerstore/market/market_product.dart';
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ class CategoriesFeedsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productsProvider = Provider.of<Products>(context, listen: false);
-    final categoryName = ModalRoute.of(context)?.settings.arguments as String;
+    final categoryName = ModalRoute.of(context)!.settings.arguments as String;
     print(categoryName);
     final productsList = productsProvider.findByCategory(categoryName);
     return Scaffold(
@@ -45,16 +45,7 @@ class CategoriesFeedsScreen extends StatelessWidget {
           );
         }),
       ),
-//         StaggeredGridView.countBuilder(
-//           padding: ,
-//   crossAxisCount: 6,
-//   itemCount: 8,
-//   itemBuilder: (BuildContext context, int index) =>FeedProducts(),
-//   staggeredTileBuilder: (int index) =>
-//       new StaggeredTile.count(3, index.isEven ? 4 : 5),
-//   mainAxisSpacing: 8.0,
-//   crossAxisSpacing: 6.0,
-// ),
+
     );
   }
 }

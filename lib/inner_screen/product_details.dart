@@ -29,12 +29,12 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
     final productsData = Provider.of<Products>(context, listen: false);
-    final productId = ModalRoute.of(context)?.settings.arguments as String?;
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
     final cartProvider = Provider.of<CartProvider>(context);
 
     final favsProvider = Provider.of<FavsProvider>(context);
     print('productId $productId');
-    final prodAttr = productsData.findById(productId!);
+    final prodAttr = productsData.findById(productId);
 
     final productsList = productsData.products;
 

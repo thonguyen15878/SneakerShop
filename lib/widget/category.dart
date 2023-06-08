@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 
-class CategoryWidget extends StatelessWidget {
+import '../inner_screen/categories_feeds.dart';
 
-   final int index;
-    CategoryWidget({Key? key, required this.index}) : super(key: key);
+class CategoryWidget extends StatefulWidget {
+
+   // CategoryWidget({  Key? key,  this.index}) : super(key: key);
+  CategoryWidget({required this.index}) : super();
+  final int index;
+
+
+
+
+  @override
+  _CategoryWidgetState createState() => _CategoryWidgetState();
+}
+
+class _CategoryWidgetState extends State<CategoryWidget> {
   List<Map<String, Object>> categories = [
     {
       'categoryName': 'Sneaker for man',
@@ -23,18 +35,24 @@ class CategoryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              image:
-                  AssetImage(categories[index]['categoryImagePath'] as String),
-              fit: BoxFit.cover
+        InkWell(
+          onTap: (){
+            Navigator.of(context).pushNamed(CategoriesFeedsScreen.routeName, arguments: '${categories[widget.index]['categoryName']}');
+
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              image: DecorationImage(
+                  image:
+                  AssetImage(categories[widget.index]['categoryImagePath'] as String),
+                  fit: BoxFit.cover
+              ),
             ),
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            width: 150,
+            height: 150,
           ),
-          margin: EdgeInsets.symmetric(horizontal: 10),
-          width: 150,
-          height: 150,
         ),
         Positioned(
           bottom: 0,
@@ -44,12 +62,12 @@ class CategoryWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             color: Theme.of(context).colorScheme.background,
             child: Text(
-              categories[index]['categoryName'] as String,
+              categories[widget.index]['categoryName'] as String,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 18,
                   // color: Theme.of(context).colorScheme.background
-                color: Colors.deepPurpleAccent
+                  color: Colors.deepPurpleAccent
               ),
             ),
           ),

@@ -1,15 +1,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sneakerstore/inner_screen/product_details.dart';
+
+import '../models/product.dart';
 
 class BrandsNavigationRail extends StatelessWidget {
-  const BrandsNavigationRail({super.key});
+
 
   @override
   Widget build(BuildContext context) {
-
+    final productsAttributes = Provider.of<Product>(context);
     return InkWell(
-      onTap: () {},
+      onTap: () => Navigator.pushNamed(context, ProductDetails.routeName,
+          arguments: productsAttributes.id),
       child: Container(
         //  color: Colors.red,
         padding: EdgeInsets.only(left: 5.0, right: 5.0),
@@ -23,8 +27,8 @@ class BrandsNavigationRail extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.background,
                   image: DecorationImage(
-                    image: AssetImage(
-                        'assets/run_sneaker.png'
+                    image: NetworkImage(
+                      productsAttributes.imageUrl,
                     ),
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -57,7 +61,7 @@ class BrandsNavigationRail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'title',
+                      productsAttributes.title,
                       maxLines: 4,
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
@@ -67,7 +71,8 @@ class BrandsNavigationRail extends StatelessWidget {
                       height: 20.0,
                     ),
                     FittedBox(
-                      child: Text('US  \$',
+                      child: Text(
+                          'US ${productsAttributes.price} \$',
                           maxLines: 1,
                           style: TextStyle(
                             color: Colors.red,
@@ -77,7 +82,8 @@ class BrandsNavigationRail extends StatelessWidget {
                     SizedBox(
                       height: 20.0,
                     ),
-                    Text('category name',
+                    Text(
+                        productsAttributes.productCategoryName,
                         style: TextStyle(color: Colors.grey, fontSize: 18.0)),
                     SizedBox(
                       height: 20.0,

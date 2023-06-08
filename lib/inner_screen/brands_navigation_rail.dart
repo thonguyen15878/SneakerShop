@@ -1,10 +1,13 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sneakerstore/inner_screen/brands_rail_widget.dart';
+
+import '../providers/products.dart';
 
 
 class BrandNavigationRailScreen extends StatefulWidget {
-  BrandNavigationRailScreen({required Key key}) : super(key: key);
+  BrandNavigationRailScreen({ Key? key}) : super(key: key);
 
   static const routeName = '/brands_navigation_rail';
   @override
@@ -15,8 +18,8 @@ class BrandNavigationRailScreen extends StatefulWidget {
 class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
   int _selectedIndex = 0;
   final padding = 8.0;
-  late String routeArgs;
-  late String brand;
+   String routeArgs = '';
+   String brand = '';
   @override
   void didChangeDependencies() {
     routeArgs = ModalRoute.of(context)!.settings.arguments.toString();
@@ -35,11 +38,11 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
       });
     }
 
-    // if (_selectedIndex == 2) {
-    //   setState(() {
-    //     brand = 'All';
-    //   });
-    // }
+    if (_selectedIndex == 2) {
+      setState(() {
+        brand = 'All';
+      });
+    }
     super.didChangeDependencies();
   }
 
@@ -71,11 +74,11 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
                               brand = 'Nike';
                             });
                           }
-                          // if (_selectedIndex == 2) {
-                          //   setState(() {
-                          //     brand = 'All';
-                          //   });
-                          // }
+                          if (_selectedIndex == 2) {
+                            setState(() {
+                              brand = 'All';
+                            });
+                          }
 
 
                           print(brand);
@@ -115,7 +118,7 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
 
                         buildRotatedTextRailDestination("Nike", padding),
 
-                        // buildRotatedTextRailDestination("All", padding),
+                        buildRotatedTextRailDestination("All", padding),
                       ],
                     ),
                   ),
@@ -150,10 +153,19 @@ class ContentSpace extends StatelessWidget {
   // final int _selectedIndex;
 
   final String brand;
-  const ContentSpace(BuildContext context, this.brand, {super.key});
+  const ContentSpace(BuildContext context, this.brand);
 
   @override
   Widget build(BuildContext context) {
+    final productsData = Provider.of<Products>(context, listen: false);
+    final productsBrand = productsData.findByBrand(brand);
+    if (brand == 'All') {
+      for (int i = 0; i < productsData.products.length; i++) {
+        productsBrand.add(productsData.products[i]);
+      }
+    }
+    // print('productsBrand ${productsBrand[0].imageUrl}');
+    print('brand $brand');
 
     return Expanded(
       child: Padding(
@@ -161,11 +173,29 @@ class ContentSpace extends StatelessWidget {
         child: MediaQuery.removePadding(
           removeTop: true,
           context: context,
-          child:
-              ListView.builder(
-            itemCount: 5,
+          child: productsBrand.isEmpty
+              ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(Icons.mood_bad, size: 80,),
+              SizedBox(
+                height: 40,
+              ),
+              Text(
+                'No products related to this brand',
+                textAlign: TextAlign.center,
+                style:
+                TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+              ),
+            ],
+          )
+              : ListView.builder(
+            itemCount: productsBrand.length,
             itemBuilder: (BuildContext context, int index) =>
-              BrandsNavigationRail(),
+                ChangeNotifierProvider.value(
+                    value: productsBrand[index],
+                    child: BrandsNavigationRail()),
           ),
         ),
       ),

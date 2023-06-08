@@ -34,14 +34,7 @@ class Products with ChangeNotifier {
                 element.get('productQuantity') ,
               ),
               isPopular: true
-            //   id: element.data().toString().contains('productId') ? element.get('productId') : '',
-            // title: element.data().toString().contains('productTitle') ? element.get('productTitle') : '',
-            // description: element.data().toString().contains('productDescription') ? element.get('productDescription') : '',
-            // price: element.data().toString().contains('price') ? element.get('id') : 0.0,
-            // imageUrl: element.data().toString().contains('productImage') ? element.get('productImage') : '',
-            // brand: element.data().toString().contains('productBrand') ? element.get('productBrand') : '',
-            // productCategoryName: element.data().toString().contains('productCategory') ? element.get('productCategory') : '',
-            // quantity: element.data().toString().contains('productQuantity') ? element.get('productQuantity') : 0,
+
 
               ),
         );

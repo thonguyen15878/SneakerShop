@@ -10,6 +10,7 @@ import '../providers/products.dart';
 import 'searchby_header.dart';
 
 class Search extends StatefulWidget {
+  static const routeName = '/Search';
   @override
   _SearchState createState() => _SearchState();
 }

@@ -17,6 +17,7 @@ import 'package:sneakerstore/market/market.dart';
 import 'package:sneakerstore/screens/upload_product_form.dart';
 import 'package:sneakerstore/screens/user_state.dart';
 import 'package:sneakerstore/screens/wishlist/wishlist.dart';
+import 'package:sneakerstore/search/search.dart';
 import 'inner_screen/brands_navigation_rail.dart';
 import 'inner_screen/categories_feeds.dart';
 import 'inner_screen/product_details.dart';
@@ -97,7 +98,7 @@ class _MyAppState extends State<MyApp> {
                 home:UserState(),
                 routes: {
                   BrandNavigationRailScreen.routeName: (ctx) =>
-                      BrandNavigationRailScreen(key: ValueKey('myKey')),
+                      BrandNavigationRailScreen(),
                   LoginScreen.routeName: (ctx) => LoginScreen(),
                   RegisterScreen.routeName: (ctx) => RegisterScreen(),
                   CartScreen.routeName: (ctx) => CartScreen(),
@@ -106,10 +107,11 @@ class _MyAppState extends State<MyApp> {
                   ForgetPassword.routeName: (ctx) => ForgetPassword(),
                   BottomBarScreen.routeName: (ctx) => BottomBarScreen(),
                   Market.routeName: (ctx) => Market(),
-                  UploadProductForm.routeName: (ctx) => UploadProductForm(),
                   CategoriesFeedsScreen.routeName: (ctx) =>
                       CategoriesFeedsScreen(),
+                  UploadProductForm.routeName: (ctx) => UploadProductForm(),
                   OrderScreen.routeName: (ctx) => OrderScreen(),
+                  Search.routeName: (ctx) => Search(),
                 },
               );
             },

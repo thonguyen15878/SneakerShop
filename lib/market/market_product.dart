@@ -5,6 +5,7 @@ import 'package:sneakerstore/inner_screen/product_details.dart';
 
 import '../models/product.dart';
 import '../providers/cart_provider.dart';
+import '../providers/products.dart';
 import '../widget/feeds_dialog.dart';
 class MarketProducts extends StatefulWidget {
   @override
@@ -12,15 +13,20 @@ class MarketProducts extends StatefulWidget {
 }
 
 class _MarketProductsState extends State<MarketProducts> {
+
   @override
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
+
+
+
 
     final productsAttributes = Provider.of<Product>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: InkWell(
-        onTap: () => Navigator.pushNamed(context, ProductDetails.routeName),
+        onTap: () => Navigator.pushNamed(context, ProductDetails.routeName,arguments: productsAttributes.id
+            ),
         child: Container(
           width: 250,
           height: 290,
@@ -66,7 +72,7 @@ class _MarketProductsState extends State<MarketProducts> {
                        Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
                         child: Text(
-                          '\$ ${productsAttributes.price}',
+                          'Price: \$ ${productsAttributes.price}',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: TextStyle(
@@ -79,7 +85,7 @@ class _MarketProductsState extends State<MarketProducts> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                            Text(
-                            '${productsAttributes.quantity}',
+                            'quantity: ${productsAttributes.quantity}',
 
                             style: TextStyle(
                                 fontSize: 12,
