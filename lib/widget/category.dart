@@ -63,6 +63,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
             color: Theme.of(context).colorScheme.background,
             child: Text(
               categories[widget.index]['categoryName'] as String,
+              textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 18,

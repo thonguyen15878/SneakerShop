@@ -137,10 +137,18 @@ class _LandingPageState extends State<LandingPage>
               crossAxisAlignment: CrossAxisAlignment.center,
               children: const [
                 Text(
-                  'WELCOME',
+                  'BAZAAR',
                   style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w600
+                    fontSize: 50,
+                    fontWeight: FontWeight.w900
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'EASY SHOES!',
+                  style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.w500
                   ),
                 ),
                 SizedBox(height: 20),

@@ -72,7 +72,7 @@ class _MarketProductsState extends State<MarketProducts> {
                        Padding(
                         padding: EdgeInsets.symmetric(vertical: 8.0),
                         child: Text(
-                          'Price: \$ ${productsAttributes.price}',
+                          '\$ ${productsAttributes.price}',
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: TextStyle(
@@ -85,7 +85,7 @@ class _MarketProductsState extends State<MarketProducts> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                            Text(
-                            'quantity: ${productsAttributes.quantity}',
+                            '${productsAttributes.quantity} items',
 
                             style: TextStyle(
                                 fontSize: 12,
