@@ -198,7 +198,7 @@ class _UserInfoState extends State<UserInfo> {
                     userListTile('Email', _email ?? '', 0, context),
                     userListTile('Phone number', _phoneNumber.toString() ?? '',
                         1, context),
-                    userListTile('Shipping address', '', 2, context),
+                    userListTile('Name', _name ?? '', 2, context),
                     userListTile('joined date', _joinedAt ?? '', 3, context),
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
@@ -328,7 +328,7 @@ class _UserInfoState extends State<UserInfo> {
   final List<IconData> _userTileIcons = [
     Icons.email,
     Icons.phone,
-    Icons.calendar_today,
+    Icons.person,
     Icons.watch_later,
     Icons.exit_to_app_rounded,
   ];

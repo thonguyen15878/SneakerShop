@@ -37,8 +37,13 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
         brand = 'Nike';
       });
     }
-
     if (_selectedIndex == 2) {
+      setState(() {
+        brand = 'Puma';
+      });
+    }
+
+    if (_selectedIndex == 3) {
       setState(() {
         brand = 'All';
       });
@@ -75,6 +80,11 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
                             });
                           }
                           if (_selectedIndex == 2) {
+                            setState(() {
+                              brand = 'Puma';
+                            });
+                          }
+                          if (_selectedIndex == 3) {
                             setState(() {
                               brand = 'All';
                             });
@@ -117,6 +127,7 @@ class _BrandNavigationRailScreenState extends State<BrandNavigationRailScreen> {
                         buildRotatedTextRailDestination('Addidas', padding),
 
                         buildRotatedTextRailDestination("Nike", padding),
+                        buildRotatedTextRailDestination("Puma", padding),
 
                         buildRotatedTextRailDestination("All", padding),
                       ],

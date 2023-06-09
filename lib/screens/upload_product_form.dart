@@ -408,12 +408,12 @@ class _UploadProductFormState extends State<UploadProductForm> {
                             DropdownButton<String>(
                               items: const [
                                 DropdownMenuItem<String>(
-                                  child: Text('sneaker for men'),
-                                  value: 'sneaker for men',
+                                  child: Text('sneaker for man'),
+                                  value: 'sneaker for man',
                                 ),
                                 DropdownMenuItem<String>(
-                                  child: Text('sneaker for woman'),
-                                  value: 'sneaker for woman',
+                                  child: Text('sneaker for women'),
+                                  value: 'sneaker for women',
                                 ),
                                 DropdownMenuItem<String>(
                                   child: Text('sneaker for sport'),
@@ -474,10 +474,10 @@ class _UploadProductFormState extends State<UploadProductForm> {
                                   child: Text('Adidas'),
                                   value: 'Adidas',
                                 ),
-                                // DropdownMenuItem<String>(
-                                //   child: Text('Apple'),
-                                //   value: 'Apple',
-                                // ),
+                                DropdownMenuItem<String>(
+                                  child: Text('Puma'),
+                                  value: 'Puma',
+                                ),
                                 // DropdownMenuItem<String>(
                                 //   child: Text('Dell'),
                                 //   value: 'Dell',

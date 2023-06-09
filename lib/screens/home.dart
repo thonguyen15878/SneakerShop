@@ -13,7 +13,8 @@ class Home extends StatelessWidget {
   @override
   List _brandImages = [
     'assets/adidas.png',
-    'assets/nike.png'
+    'assets/nike.png',
+    'assets/puma.png'
   ];
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
@@ -94,7 +95,7 @@ class Home extends StatelessWidget {
                             Navigator.of(context).pushNamed(
                               BrandNavigationRailScreen.routeName,
                               arguments: {
-                                2,
+                                3,
                               },
                             );
                           },
