@@ -3,6 +3,7 @@ import 'package:sneakerstore/consts/colors.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../screens/bottom_bar.dart';
 import '../search/search.dart';
 class CartEmpty extends StatelessWidget {
   @override
@@ -61,7 +62,7 @@ class CartEmpty extends StatelessWidget {
             ),
             child: ElevatedButton(
               onPressed: () => {
-                Navigator.of(context).pushNamed(Search.routeName),
+                Navigator.of(context).pushNamed(BottomBarScreen.routeName),
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 
 import '../../market/market.dart';
 import '../../search/search.dart';
+import '../bottom_bar.dart';
 class WishlistEmpty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class WishlistEmpty extends StatelessWidget {
             ),
             child: ElevatedButton(
               onPressed: () => {
-                Navigator.of(context).pushNamed(Search.routeName),
+                Navigator.of(context).pushNamed(BottomBarScreen.routeName),
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.zero,
