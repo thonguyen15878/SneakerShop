@@ -32,7 +32,8 @@ class _MarketProductsState extends State<MarketProducts> {
           height: 290,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              color: Theme.of(context).colorScheme.background),
+              color: Theme.of(context).colorScheme.background
+          ),
           child: Column(
             children: [
               Stack(

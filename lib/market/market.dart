@@ -45,6 +45,7 @@ class _MarketState extends State<Market> {
     }
 
     return Scaffold(
+
       appBar: AppBar(
         backgroundColor: Theme.of(context).cardColor,
         title: Text('Market'),
