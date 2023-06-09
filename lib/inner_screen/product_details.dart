@@ -173,6 +173,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                           '${prodAttr.quantity}'),
                       _details(themeState.darkTheme, 'Category: ',
                           prodAttr.productCategoryName ),
+                      _details(themeState.darkTheme, 'Created by: ',
+                          prodAttr.username ),
 
                       SizedBox(
                         height: 15,

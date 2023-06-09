@@ -93,6 +93,8 @@ class _UploadProductFormState extends State<UploadProductForm> {
 
           final User? user = _auth.currentUser;
           final _uid = user!.uid;
+          final _username = user!.displayName;
+
           final productId = uuid.v4();
           await FirebaseFirestore.instance
               .collection('products')
@@ -107,6 +109,7 @@ class _UploadProductFormState extends State<UploadProductForm> {
             'productDescription': _productDescription,
             'productQuantity': _productQuantity,
             'userId': _uid,
+            'name': _username,
             'createdAt': Timestamp.now(),
           });
           Navigator.canPop(context) ? Navigator.pop(context) : null;

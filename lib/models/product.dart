@@ -11,6 +11,7 @@ class Product with ChangeNotifier{
   final int quantity;
   final bool isFavorite;
   final bool isPopular;
+  final String username;
 
   Product({
     this.id = '',
@@ -23,6 +24,7 @@ class Product with ChangeNotifier{
     this.quantity = 0,
     this.isFavorite = false,
     this.isPopular = false,
+    this.username = '',
   });
 
 

@@ -33,7 +33,8 @@ class Products with ChangeNotifier {
               quantity: int.parse(
                 element.get('productQuantity') ,
               ),
-              isPopular: true
+              isPopular: true,
+              username: element.get('name')
 
 
               ),
