@@ -243,7 +243,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 Container(
                   margin: EdgeInsets.only(bottom: 30),
                   width: double.infinity,
-                  height: 340,
+                  height: 380,
                   child: ListView.builder(
                     itemCount:
                         productsList.length < 7 ? productsList.length : 7,
