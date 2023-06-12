@@ -12,6 +12,7 @@ import 'package:sneakerstore/services/global_method.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -22,44 +23,12 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage>
     with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _animation;
-  List<String> images = [
-    'https://unsplash.com/photos/Qe3kgY98OXs',
-    'https://unsplash.com/photos/_kY6w94o-f0',
-    'https://unsplash.com/photos/Z6YxSbcIXT0',
-    'https://unsplash.com/photos/sKYxVXKCSXk',
-    'https://unsplash.com/photos/7TXuRFDe_Gk',
-    'https://unsplash.com/photos/_BWzJXm9Yug',
-    'https://unsplash.com/photos/bfOHFM7ollI',
-    'https://unsplash.com/photos/kCB8aHEMCC0',
-    'https://unsplash.com/photos/goNZjZWa5CY',
-    'https://unsplash.com/photos/oARPb2dEOtQ'
-  ];
   final FirebaseAuth _auth = FirebaseAuth.instance;
   GlobalMethods _globalMethods = GlobalMethods();
   bool _isLoading = false;
-  @override
-  void initState() {
-    super.initState();
-    images.shuffle();
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 20));
-    _animation = CurvedAnimation(parent: _animationController, curve: Curves.linear)
-    ..addListener(() {
-      setState(() {});
-    })
-    ..addStatusListener((animationStatus) {
-      if (animationStatus == AnimationStatus.completed) {
-        _animationController.reset();
-        _animationController.forward();
-      }
-    });
-    _animationController.forward();
-  }
 
   @override
   void dispose() {
-    _animationController.dispose();
     super.dispose();
   }
   Future<void> _googleSignIn() async {
@@ -140,7 +109,8 @@ class _LandingPageState extends State<LandingPage>
                   'BAZAAR',
                   style: TextStyle(
                     fontSize: 50,
-                    fontWeight: FontWeight.w900
+                    fontWeight: FontWeight.w900,
+                    fontFamily: 'Roboto'
                   ),
                 ),
                 SizedBox(height: 10),
