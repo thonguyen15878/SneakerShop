@@ -34,13 +34,13 @@ class _MomoScreen extends State<Momo> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 80),
+              margin: const EdgeInsets.only(top: 20),
               width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.4,
+              height: MediaQuery.of(context).size.height * 0.6,
               decoration: const BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.fill,
-                  image: AssetImage('assets/images/momo.png'),
+                  image: AssetImage('assets/images/momo1.png'),
                 ),
               ),
             ),
