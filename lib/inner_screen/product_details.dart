@@ -12,6 +12,7 @@ import '../cart/cart.dart';
 import '../providers/favs_provider.dart';
 import '../providers/products.dart';
 import '../screens/wishlist/wishlist.dart';
+import 'momo.dart';
 
 class ProductDetails extends StatefulWidget {
   static const routeName = '/ProductDetails';
@@ -341,22 +342,32 @@ class _ProductDetailsState extends State<ProductDetails> {
                       onPressed: () {},
                       child: Row(
                         children: [
-                          Text(
-                            'Buy now'.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor,
+
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(Momo.routeName);
+                              // Handle the onPressed event here
+                              // Add your desired functionality
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Buy now'.toUpperCase(),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Theme.of(context).textSelectionTheme.selectionColor,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.payment,
+                                  color: Colors.green.shade700,
+                                  size: 19,
+                                ),
+                              ],
                             ),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Icon(
-                            Icons.payment,
-                            color: Colors.green.shade700,
-                            size: 19,
                           ),
                         ],
                       ),

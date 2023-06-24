@@ -20,6 +20,7 @@ import 'package:sneakerstore/screens/wishlist/wishlist.dart';
 import 'package:sneakerstore/search/search.dart';
 import 'inner_screen/brands_navigation_rail.dart';
 import 'inner_screen/categories_feeds.dart';
+import 'inner_screen/momo.dart';
 import 'inner_screen/product_details.dart';
 import 'loader.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -112,6 +113,7 @@ class _MyAppState extends State<MyApp> {
                   UploadProductForm.routeName: (ctx) => UploadProductForm(),
                   OrderScreen.routeName: (ctx) => OrderScreen(),
                   Search.routeName: (ctx) => Search(),
+                  Momo.routeName: (ctx) => Momo()
                 },
               );
             },

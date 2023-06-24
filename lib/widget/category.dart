@@ -19,15 +19,15 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   List<Map<String, Object>> categories = [
     {
       'categoryName': 'Sneaker for man',
-      'categoryImagePath': 'assets/sneaker_for_men.png'
+      'categoryImagePath': 'assets/images/sneaker_for_men.png'
     },
     {
       'categoryName': 'Sneaker for women',
-      'categoryImagePath': 'assets/sneaker_for_women.png'
+      'categoryImagePath': 'assets/images/sneaker_for_women.png'
     },
     {
       'categoryName': 'Sneaker for sport',
-      'categoryImagePath': 'assets/run_sneaker.png'
+      'categoryImagePath': 'assets/images/run_sneaker.png'
     }
   ];
 
