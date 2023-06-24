@@ -94,7 +94,7 @@ class _LandingPageState extends State<LandingPage>
           ),
           Container(
             child: Image.asset(
-              'assets/shop.png',
+              'assets/images/logo.png',
               height: double.infinity,
               width: double.infinity,
             ),
@@ -108,31 +108,21 @@ class _LandingPageState extends State<LandingPage>
                 Text(
                   'BAZAAR',
                   style: TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'Roboto'
+                    fontSize: 70,
+                    fontWeight: FontWeight.w800,
+                    fontFamily: 'Asul'
                   ),
                 ),
                 SizedBox(height: 10),
                 Text(
                   'EASY SHOES!',
                   style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.w500
+                      fontSize: 35,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Asul'
                   ),
                 ),
                 SizedBox(height: 20),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(horizontal: 30),
-                //   child: Text(
-                //   '',
-                //   textAlign: TextAlign.center,
-                //   style: TextStyle(
-                //     fontSize: 26,
-                //     fontWeight: FontWeight.w400
-                //   ),
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -158,8 +148,9 @@ class _LandingPageState extends State<LandingPage>
                             Text(
                               'Log in',
                               style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17,
+                                fontFamily: 'Inter'
                               ),
                             ),
                             SizedBox(width: 5),
@@ -190,8 +181,9 @@ class _LandingPageState extends State<LandingPage>
                           Text(
                             'Sign up',
                             style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17,
+                                fontFamily: 'Inter'
                             ),
                           ),
                           SizedBox(width: 5),
@@ -220,7 +212,10 @@ class _LandingPageState extends State<LandingPage>
                   ),
                   Text(
                     'Or continue with',
-                    style: TextStyle(color: Colors.black)
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: 'Inter'
+                    ),
                   ),
                   Expanded(
                       child: Padding(
@@ -247,7 +242,13 @@ class _LandingPageState extends State<LandingPage>
                         foregroundColor: Colors.white
                     ),
                     onPressed: _googleSignIn,
-                    child: const Text('Google +'),
+                    child: const Text(
+                      'Google +',
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600
+                      ),
+                    ),
                   ),
                   OutlinedButton(
                     style: OutlinedButton.styleFrom(
@@ -259,7 +260,13 @@ class _LandingPageState extends State<LandingPage>
                         foregroundColor: Colors.white
                     ),
                     onPressed: (){},
-                    child: const Text('Facebook'),
+                    child: const Text(
+                      'Facebook',
+                      style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600
+                      ),
+                    ),
                   ),
                   _isLoading
                       ? const CircularProgressIndicator()
@@ -275,7 +282,13 @@ class _LandingPageState extends State<LandingPage>
                     onPressed: (){
                       _loginAnonymosly();
                       },
-                    child: const Text('Sign in as guest'),
+                    child: const Text(
+                      'Sign in as guest',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
                   ),
                 ],
               ),

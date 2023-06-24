@@ -100,7 +100,7 @@ flutter:
     - assets/images/run_sneaker.png
     - assets/images/profile.png
     - assets/images/Bazaar.png
-    - assets/images/shop.png
+    - assets/images/logo.png
     - assets/images/puma.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -198,7 +198,7 @@ flutter:
           weight: 700
         - asset: assets/fonts/TitilliumWeb-Black.ttf
           weight: 900
-    - family:
+    - family: Teko
       fonts:
         - asset: assets/fonts/Teko-SemiBold.ttf
           weight: 600
@@ -1246,6 +1246,11 @@ flutter:
     - family: Abel
       fonts:
         - asset: assets/fonts/Abel-Regular.ttf
+    - family: Asul
+      fonts:
+        - asset: assets/fonts/Asul-Regular.ttf
+        - asset: assets/fonts/Asul-Bold.ttf
+          weight: 700
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
