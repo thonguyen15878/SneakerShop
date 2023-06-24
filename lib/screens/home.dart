@@ -12,9 +12,9 @@ import '../widget/category.dart';
 class Home extends StatelessWidget {
   @override
   List _brandImages = [
-    'assets/adidas.png',
-    'assets/nike.png',
-    'assets/puma.png'
+    'assets/images/adidas.png',
+    'assets/images/nike.png',
+    'assets/images/puma.png'
   ];
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                 backgroundColor: Colors.white,
                 child: CircleAvatar(
                   radius: 13,
-                  backgroundImage: AssetImage('assets/Bazaar.png'),
+                  backgroundImage: AssetImage('assets/images/logo.png'),
                 ),
               ),
               onPressed: () {},
@@ -51,7 +51,7 @@ class Home extends StatelessWidget {
         frontLayer: Column(
           children: [
             Image.asset(
-              'assets/Bazaar.png',
+              'assets/images/logo.png',
               fit: BoxFit.cover,
               height: 200,
                 width: double.infinity,// adjust the height as needed

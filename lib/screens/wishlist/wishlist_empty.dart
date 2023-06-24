@@ -22,7 +22,7 @@ class WishlistEmpty extends StatelessWidget {
             decoration: const BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage('assets/empty-cart.png'),
+                image: AssetImage('assets/images/empty-cart.png'),
                 //   image: NetworkImage(
                 //       'https://assets.materialup.com/uploads/16e7d0ed-140b-4f86-9b7e-d9d1c04edb2b/preview.png'
                 //   )
