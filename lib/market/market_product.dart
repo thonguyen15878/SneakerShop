@@ -62,7 +62,7 @@ class _MarketProductsState extends State<MarketProducts> {
                         height: 4,
                       ),
                        Text(
-                        productsAttributes.description,
+                        productsAttributes.title,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                         style: TextStyle(
