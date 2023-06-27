@@ -187,49 +187,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
 
                       // const SizedBox(height: 15.0),
-                      Container(
-                        color: Theme.of(context).colorScheme.background,
-                        width: double.infinity,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const SizedBox(height: 10.0),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'No reviews yet',
-                                style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textSelectionTheme
-                                        .selectionColor,
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 21.0),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Text(
-                                'Be the first review!',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 20.0,
-                                  color: themeState.darkTheme
-                                      ? Theme.of(context).disabledColor
-                                      : ColorsConsts.subTitle,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 70,
-                            ),
-                            Divider(
-                              thickness: 1,
-                              color: Colors.grey,
-                              height: 1,
-                            ),
-                          ],
-                        ),
-                      ),
+
                     ],
                   ),
                 ),

@@ -50,6 +50,7 @@ class Home extends StatelessWidget {
         backLayer: BackLayerMenu(),
         frontLayer: Column(
           children: [
+
             Image.asset(
               'assets/images/logo.png',
               fit: BoxFit.cover,
@@ -57,92 +58,96 @@ class Home extends StatelessWidget {
                 width: double.infinity,// adjust the height as needed
             ),
             SizedBox(height: 16), // add spacing between the image and other content
-            SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Categories',
-                      style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+            
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Categories',
+                        style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: 180,
-                    child: ListView.builder(
-                      itemCount: 3,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (BuildContext ctx, int index) {
-                        return CategoryWidget(
-                          index: index,
-                        );
+                    Container(
+                      height: 180,
+                      child: ListView.builder(
+                        itemCount: 3,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext ctx, int index) {
+                          return CategoryWidget(
+                            index: index,
+                          );
 
-                      },
+                        },
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          'Brand',
-                          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
-                        ),
-                        Spacer(),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(
-                              BrandNavigationRailScreen.routeName,
-                              arguments: {
-                                3,
-                              },
-                            );
-                          },
-                          child: Text(
-                            'View All...',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w800,
-                                fontSize: 15,
-                                color: Colors.red),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            'Brand',
+                            style: TextStyle(fontWeight: FontWeight.w800, fontSize: 20),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 210,
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    child: Swiper(
-                      itemCount: _brandImages.length,
-                      autoplay: true,
-                      viewportFraction: 0.8,
-                      scale: 0.9,
-                      onTap: (index) {
-                        Navigator.of(context).pushNamed(
-                          BrandNavigationRailScreen.routeName,
-                          arguments: {
-                            index,
-                          },
-                        );
-                      },
-                      itemBuilder: (BuildContext ctx, int index) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Container(
-                            color: Colors.blueGrey,
-                            child: Image.asset(
-                              _brandImages[index],
-                              fit: BoxFit.fill,
+                          Spacer(),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(
+                                BrandNavigationRailScreen.routeName,
+                                arguments: {
+                                  3,
+                                },
+                              );
+                            },
+                            child: Text(
+                              'View All...',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 15,
+                                  color: Colors.red),
                             ),
                           ),
-                        );
-                      },
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    Container(
+                      height: 210,
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      child: Swiper(
+                        itemCount: _brandImages.length,
+                        autoplay: true,
+                        viewportFraction: 0.8,
+                        scale: 0.9,
+                        onTap: (index) {
+                          Navigator.of(context).pushNamed(
+                            BrandNavigationRailScreen.routeName,
+                            arguments: {
+                              index,
+                            },
+                          );
+                        },
+                        itemBuilder: (BuildContext ctx, int index) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              color: Colors.blueGrey,
+                              child: Image.asset(
+                                _brandImages[index],
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+            
           ],
         ),
 

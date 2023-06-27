@@ -34,92 +34,94 @@ class _MarketProductsState extends State<MarketProducts> {
               borderRadius: BorderRadius.circular(6),
               color: Theme.of(context).colorScheme.background
           ),
-          child: Column(
-            children: [
-              Stack(
-                children: [
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Stack(
+                  children: [
 
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(2),
-                    child: Container(
-                      width: double.infinity,
-                      constraints: BoxConstraints(
-                          minHeight: 100,
-                          maxHeight: MediaQuery.of(context).size.height * 0.3),
-                      child: Image.network(productsAttributes.imageUrl, fit: BoxFit.fitWidth),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(2),
+                      child: Container(
+                        width: double.infinity,
+                        constraints: BoxConstraints(
+                            minHeight: 100,
+                            maxHeight: MediaQuery.of(context).size.height * 0.3),
+                        child: Image.network(productsAttributes.imageUrl, fit: BoxFit.fitWidth),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.only(left: 5),
-                  margin: const EdgeInsets.only(left: 5, bottom: 2, right: 3),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children:  [
-                      const SizedBox(
-                        height: 4,
-                      ),
-                       Text(
-                        productsAttributes.title,
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600),
-                      ),
-                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(
-                          '\$ ${productsAttributes.price}',
+                  ],
+                ),
+                
+                  Container(
+                    padding: const EdgeInsets.only(left: 5),
+                    margin: const EdgeInsets.only(left: 5, bottom: 2, right: 3),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:  [
+                        const SizedBox(
+                          height: 4,
+                        ),
+                         Text(
+                          productsAttributes.title,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
                           style: TextStyle(
-                              fontSize: 18,
+                              fontSize: 15,
                               color: Colors.black,
-                              fontWeight: FontWeight.w900),
+                              fontWeight: FontWeight.w600),
                         ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                           Text(
-                            '${productsAttributes.quantity} items',
-
+                         Padding(
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            '\$ ${productsAttributes.price}',
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
                             style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600
-                            ),
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900),
                           ),
-                          Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              onTap: () async {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) => FeedDialog(
-                                    productId: productsAttributes.id,
-                                  ),
-                                );
-                              },
-                              borderRadius: BorderRadius.circular(18.0),
-                              child: const Icon(
-                                Icons.more_horiz,
-                                color: Colors.grey
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                             Text(
+                              '${productsAttributes.quantity} items',
+
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  fontWeight: FontWeight.w600
                               ),
                             ),
-                          )
+                            Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                onTap: () async {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) => FeedDialog(
+                                      productId: productsAttributes.id,
+                                    ),
+                                  );
+                                },
+                                borderRadius: BorderRadius.circular(18.0),
+                                child: const Icon(
+                                  Icons.more_horiz,
+                                  color: Colors.grey
+                                ),
+                              ),
+                            )
 
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                
+              ],
+            ),
           ),
         ),
       ),
