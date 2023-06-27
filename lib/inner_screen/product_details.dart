@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sneakerstore/market/market_product.dart';
 
 import '../consts/colors.dart';
+import '../models/product.dart';
 import '../providers/cart_provider.dart';
 import '../providers/dark_theme_provider.dart';
 import '../cart/cart.dart';
@@ -302,11 +303,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                         children: [
 
                           GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed(Momo.routeName);
-                              // Handle the onPressed event here
-                              // Add your desired functionality
-                            },
+                            onTap: ()
+                        => Navigator.pushNamed(context, Momo.routeName,arguments: prodAttr.id),
+                            // {
+                            //   Navigator.of(context).pushNamed(Momo.routeName);
+                            //   // Handle the onPressed event here
+                            //   // Add your desired functionality
+                            // },
                             child: Row(
                               children: [
                                 Text(

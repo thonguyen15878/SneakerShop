@@ -27,6 +27,9 @@ class _MomoScreen extends State<Momo> {
 
 
     final themeChange = Provider.of<DarkThemeProvider>(context);
+    final productsData = Provider.of<Products>(context, listen: false);
+    final productId = ModalRoute.of(context)!.settings.arguments as String;
+    final prodAttr = productsData.findById(productId);
     return Container(
       color: Colors.white,
       child: Center(
@@ -46,26 +49,42 @@ class _MomoScreen extends State<Momo> {
             ),
             SizedBox(height: 30),
             Container(
-              child: Text(
-                'Your Product: Adidas Super Star',
+              child: RichText(
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Theme.of(context).textSelectionTheme.selectionColor,
+                text: TextSpan(
+                  style: TextStyle(
                     fontSize: 25,
-                    fontWeight: FontWeight.w600),
+                    fontWeight: FontWeight.w600,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: 'your total payment: ',
+                      style: TextStyle(
+                        color: Theme.of(context).textSelectionTheme.selectionColor,
+                      ),
+                    ),
+                    TextSpan(
+                      text: '\$ ${prodAttr.price}',
+                      style: TextStyle(
+                        color: Colors.red, // Replace with your desired color
+                      ),
+                    ),
+                  ],
+                ),
               ),
+
             ),
-            SizedBox(height: 30),
-            Container(
-              child: Text(
-                'your payment: US \$ 50.0',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Theme.of(context).textSelectionTheme.selectionColor,
-                    fontSize: 25,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
+            // SizedBox(height: 30),
+            // Container(
+            //   child: Text(
+            //     'your payment: US \$ 50.0',
+            //     textAlign: TextAlign.center,
+            //     style: TextStyle(
+            //         color: Theme.of(context).textSelectionTheme.selectionColor,
+            //         fontSize: 25,
+            //         fontWeight: FontWeight.w600),
+            //   ),
+            // ),
             SizedBox(height: 30),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
