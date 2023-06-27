@@ -15,6 +15,7 @@ class CartProvider with ChangeNotifier {
     });
     return total;
   }
+  
 
   void addProductToCart(
       String productId, double price, String title, String imageUrl) {

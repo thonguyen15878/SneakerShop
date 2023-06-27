@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sneakerstore/consts/theme_data.dart';
+import 'package:sneakerstore/inner_screen/momo_in_cart.dart';
 import 'package:sneakerstore/providers/cart_provider.dart';
 import 'package:sneakerstore/providers/dark_theme_provider.dart';
 import 'package:sneakerstore/providers/favs_provider.dart';
@@ -113,7 +114,8 @@ class _MyAppState extends State<MyApp> {
                   UploadProductForm.routeName: (ctx) => UploadProductForm(),
                   OrderScreen.routeName: (ctx) => OrderScreen(),
                   Search.routeName: (ctx) => Search(),
-                  Momo.routeName: (ctx) => Momo()
+                  Momo.routeName: (ctx) => Momo(),
+                  // MomoInCart.routeName: (ctx) => MomoInCart(),
                 },
               );
             },

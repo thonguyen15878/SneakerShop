@@ -144,14 +144,21 @@ class _CartScreenState extends State<CartScreen> {
                         splashColor: Theme.of(ctx).splashColor,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Checkout',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
+                        child: TextButton(
+                          onPressed: () {
+                            // Add your checkout logic here
+                          },
+                          child: Text(
+                            'Buy Now',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
                               color: Theme.of(ctx).textSelectionTheme.selectionColor,
                               fontSize: 18,
-                              fontWeight: FontWeight.w600),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
+
                       ),
                     ),
                   ),
