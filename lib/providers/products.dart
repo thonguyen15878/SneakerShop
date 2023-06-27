@@ -9,6 +9,8 @@ class Products with ChangeNotifier {
     return [..._products];
   }
 
+  
+
   Future<void> fetchProducts() async {
     print('Fetch method is called');
     await FirebaseFirestore.instance
